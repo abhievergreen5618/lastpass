@@ -19,8 +19,13 @@ import { cilLockLocked, cilUser } from '@coreui/icons'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import axios from 'axios'
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { loginSuccess } from '../../../redux-state/authSlice'
 
 function Login() {
+  const dispatch = useDispatch()
   const schema = yup.object().shape({
     email: yup.string().email('Please enter an valid email').required('Field is required'),
     password: yup.string().required('Field is required'),
@@ -30,23 +35,28 @@ function Login() {
     email: '',
     password: '',
   }
+  const navigate = useNavigate()
+
   const onSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
+      setSubmitting(true)
       // Make an API request to your server for validation
       const response = await axios.post(
         'http://127.0.0.1/evergreen_projects/Github/lastpass/backend/public/api/login',
         values,
       )
-
-      // Check the validation result from the server
-      if (response.data.errors) {
-        setErrors(response.data.errors)
-      } else {
-        // Do something with the successful response
-        console.log('Form submitted successfully')
+      if (response.status == 200) {
+        dispatch(loginSuccess({ token: response.data.token }))
+        toast.success(response.data.message)
+        navigate('/dashboard')
       }
     } catch (error) {
-      console.error('Error during validation:', error)
+      if (error.response.status == 422) {
+        setErrors(error.response.data.errors)
+        toast.error(error.response.data.message)
+      } else {
+        toast.error('OoPs! Something Went Wrong.')
+      }
     } finally {
       setSubmitting(false)
     }
@@ -65,7 +75,7 @@ function Login() {
                     onSubmit={onSubmit}
                     initialValues={initialValues}
                   >
-                    {({ handleSubmit, handleChange, values, touched, errors }) => (
+                    {({ handleSubmit, handleChange, values, touched, errors, isSubmitting }) => (
                       <CForm noValidate onSubmit={handleSubmit}>
                         <h1>Login</h1>
                         <p className="text-body-secondary">Sign In to your account</p>
@@ -99,8 +109,13 @@ function Login() {
                         </CInputGroup>
                         <CRow>
                           <CCol xs={6}>
-                            <CButton type="submit" color="primary" className="px-4">
-                              Login
+                            <CButton
+                              type="submit"
+                              color="primary"
+                              disabled={isSubmitting}
+                              className="px-4"
+                            >
+                              {isSubmitting ? 'Loading...' : 'Login'}
                             </CButton>
                           </CCol>
                           <CCol xs={6} className="text-right">

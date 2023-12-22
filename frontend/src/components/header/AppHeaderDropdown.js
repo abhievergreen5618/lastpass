@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   CAvatar,
   CBadge,
@@ -15,16 +15,36 @@ import {
   cilCommentSquare,
   cilEnvelopeOpen,
   cilFile,
-  cilLockLocked,
+  cilAccountLogout,
   cilSettings,
   cilTask,
   cilUser,
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
-
 import avatar8 from './../../assets/images/avatars/8.jpg'
+import { useDispatch } from 'react-redux'
+import { logoutSuccess } from '../../redux-state/authSlice'
+import api from '../../redux-state/api'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const AppHeaderDropdown = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const Logout = async () => {
+    try {
+      const response = await api.post('/logout')
+      if (response.status === 200) {
+        toast.success(response.data.message)
+        dispatch(logoutSuccess())
+        navigate('/login')
+      }
+    } catch (error) {
+      console.error('API request failed:', error)
+    }
+  }
+
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0 pe-0" caret={false}>
@@ -84,9 +104,9 @@ const AppHeaderDropdown = () => {
           </CBadge>
         </CDropdownItem>
         <CDropdownDivider />
-        <CDropdownItem href="#">
-          <CIcon icon={cilLockLocked} className="me-2" />
-          Lock Account
+        <CDropdownItem href="#" onClick={Logout}>
+          <CIcon icon={cilAccountLogout} className="me-2" />
+          Logout
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>

@@ -20,3 +20,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/register',[AuthController::class, 'register']);
+
+Route::post('/login',[AuthController::class, 'login']);
+Route::middleware(['auth:api'])->group(function () {
+    // Your other authenticated routes
+
+    Route::post('/get-user', [AuthController::class, 'getUser']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
