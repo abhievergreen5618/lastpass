@@ -21,6 +21,7 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { loginSuccess } from '../../../redux-state/authSlice'
+import { registerUrl } from 'src/utilities/apiurl'
 
 function Register() {
   const dispatch = useDispatch()
@@ -47,10 +48,7 @@ function Register() {
     try {
       setSubmitting(true)
       // Make an API request to your server for validation
-      const response = await axios.post(
-        'http://127.0.0.1/evergreen_projects/Github/lastpass/backend/public/api/register',
-        values,
-      )
+      const response = await axios.post(registerUrl, values)
       if (response.status == 200) {
         dispatch(loginSuccess({ user: response.data.user, token: response.data.token }))
         toast.success(response.data.message)
@@ -60,6 +58,8 @@ function Register() {
       if (error.response.status == 422) {
         setErrors(error.response.data.errors)
         toast.error(error.response.data.message)
+      } else if (error.hasOwnProperty('response') && error.response.status == 500) {
+        toast.error('Server Error')
       } else {
         toast.error('OoPs! Something Went Wrong.')
       }

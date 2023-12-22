@@ -54,14 +54,25 @@ import WidgetsBrand from '../widgets/WidgetsBrand'
 import WidgetsDropdown from '../widgets/WidgetsDropdown'
 import MainChart from './MainChart'
 import api from '../../redux-state/api'
+import { NotAuthenticatedHandler } from '../../utilities/auth'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { logoutSuccess } from '../../redux-state/authSlice'
 
 function Dashboard() {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await api.post('/get-user')
         console.log(response.data)
       } catch (error) {
+        const result = await NotAuthenticatedHandler(error)
+        if (result) {
+          dispatch(logoutSuccess())
+          navigate('/login')
+        }
         console.error('API request failed:', error)
       }
     }
