@@ -7,7 +7,10 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use App\Models\password;
+use App\Models\Password;
+use App\Models\User;
+use Illuminate\Support\Facades\Log;
+
 
 class PasswordController extends Controller
 {
@@ -16,7 +19,22 @@ class PasswordController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            // Attempt to authenticate the user based on the JWT token in the request header
+            $user = JWTAuth::parseToken()->authenticate();
+            $passwords = Password::where('user_id',$user->id)->get();
+
+            if ($passwords->isNotEmpty()) {
+                return response()->json(['passwords' => $passwords]);
+            } else {
+                // If no folders are found, return a message
+                return response()->json(['passwords' => []]);
+            }
+        } catch (\Exception $e) {
+            Log::error('Error creating password: ' . $e->getMessage());
+            // If an exception occurs, return an error response
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
     }
 
     /**
@@ -36,19 +54,42 @@ class PasswordController extends Controller
             // Attempt to authenticate the user based on the JWT token in the request header
             $user = JWTAuth::parseToken()->authenticate();
 
-            $validator = Validator::make($request->all(), [
-                'host' => 'required',
-                'email' => 'required|string|email|max:255',
-                'password' => 'required|',
-            ], [
-                'required' => 'Field is required',
-            ]);
-    
+            // Validate the request data
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'name' => 'required', // Assuming folder_id is required
+                    'folder' => 'required',
+                    'url' => 'required',
+                    'username' => 'required',
+                    'password' => 'required',
+                    'notes' => 'max:255',
+                ],
+                [
+                    'required' => 'Field is required',
+                ]
+            );
+
+            // Check if validation fails
             if ($validator->fails()) {
                 return response()->json(['message' => 'Oops! Something went wrong with your submission.', 'errors' => $validator->errors()], 422);
             }
-        }
-        catch (\Exception $e) {
+
+            // Create a new password record
+            Password::create([
+                'user_id' => $user->id,
+                'name' => $request['name'],
+                'folder_id' => $request['folder'],
+                'url' => $request['url'],
+                'username' => $request['username'],
+                'password' => $request['password'],
+                'notes' => $request['notes'] || '',
+            ]);
+
+            // Optionally, you can return a success response
+            return response()->json(['message' => 'Password created successfully'], 200);
+        } catch (\Exception $e) {
+            Log::error('Error creating password: ' . $e->getMessage());
             // If an exception occurs, return an error response
             return response()->json(['error' => 'Unauthorized'], 401);
         }

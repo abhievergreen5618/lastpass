@@ -2,7 +2,7 @@ export const NotAuthenticatedHandler = (errors) => {
   if (
     errors.hasOwnProperty('response') &&
     errors.response.status === 401 &&
-    errors.response.data.message === 'Unauthenticated'
+    errors.response.data.message === 'Unauthenticated.'
   ) {
     return true
   }

@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\FoldersController;
 use App\Http\Controllers\Api\PasswordController;
 
 /*
@@ -28,4 +29,6 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/get-user', [AuthController::class, 'getUser']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/savepassword', [PasswordController::class, 'store']);
+    Route::post('/getpasswordlist', [PasswordController::class, 'index']);
+    Route::post('/getfolderslist', [FoldersController::class, 'list']);
 });
