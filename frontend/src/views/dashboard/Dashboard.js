@@ -276,6 +276,7 @@ function Dashboard() {
                       name="url"
                       onChange={handleChange}
                       invalid={touched.url && errors.url ? true : false}
+                      value={values.url}
                     />
                     <CFormFeedback invalid>{errors.url}</CFormFeedback>
                   </CCol>
@@ -298,6 +299,7 @@ function Dashboard() {
                       name="folder"
                       onChange={handleChange}
                       invalid={touched.folder && errors.folder ? true : false}
+                      value={values.folder}
                     >
                       <option value="">Choose...</option>
                       {foldersList.map((folder) => (
