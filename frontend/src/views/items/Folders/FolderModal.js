@@ -128,15 +128,16 @@ function FolderForm(props) {
               <CRow>
                 <CCol xs={12} className="my-2">
                   <CFormInput
-                    id="url"
+                    type="text"
+                    id="folder_name"
                     label="Folder Name"
-                    placeholder="www.google.com"
-                    name="url"
+                    placeholder=""
+                    name="folder_name"
                     onChange={handleChange}
-                    invalid={touched.url && errors.url ? true : false}
-                    value={values.url}
+                    invalid={touched.folder_name && errors.folder_name ? true : false}
+                    value={values.folder_name}
                   />
-                  <CFormFeedback invalid>{errors.url}</CFormFeedback>
+                  <CFormFeedback invalid>{errors.folder_name}</CFormFeedback>
                 </CCol>
                 <CCol md={6} className="my-2">
                   <CFormInput

@@ -136,6 +136,7 @@ function PasswordModal(props) {
                     invalid={touched.url && errors.url ? true : false}
                     value={values.url}
                   />
+
                   <CFormFeedback invalid>{errors.url}</CFormFeedback>
                 </CCol>
                 <CCol md={6} className="my-2">
