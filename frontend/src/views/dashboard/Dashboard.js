@@ -28,6 +28,7 @@ import { logoutSuccess } from '../../redux-state/authSlice'
 import lock from '../../assets/images/lock.jpg'
 import PasswordModal from '../items/Password/PasswordModal'
 import FolderModal from '../items/Folders/FolderModal'
+import NoteModal from '../items/Notes/NotesModal'
 import { CSpinner } from '@coreui/react'
 
 function Dashboard() {
@@ -36,6 +37,7 @@ function Dashboard() {
   const [visiblemain, setVisibleMain] = useState(false)
   const [showpasswordForm, setShowPasswordForm] = useState(false)
   const [showfolderform, setShowfolderform] = useState(false)
+  const [shownoteform, setShowNoteform] = useState(false)
   const [foldersList, setFoldersList] = useState([])
   const [passwordslist, setPasswordsList] = useState([])
 
@@ -81,14 +83,18 @@ function Dashboard() {
     fetchData()
   }, [])
 
-  const fetchFolders = async () => {
+  const fetchFolders = async (type) => {
     try {
       const response = await api.post('/getfolderslist')
       if (response.status == 200) {
-        setFoldersList(response.data.folders)
+        await setFoldersList(response.data.folders)
         console.log(response.data.folders)
-        setVisibleMain(false)
-        setShowPasswordForm(true)
+        // Assuming setShowfolderform and setShowPasswordForm are asynchronous, use await
+        if (type === 'password') {
+          await setShowPasswordForm(true)
+        } else {
+          await setShowfolderform(true)
+        }
       }
     } catch (error) {
       const result = await NotAuthenticatedHandler(error)
@@ -155,7 +161,7 @@ function Dashboard() {
             <CButton
               color="primary"
               onClick={() => {
-                fetchFolders()
+                fetchFolders('password')
               }}
             >
               <div className="d-flex flex-column justify-content-center align-items-center">
@@ -166,7 +172,7 @@ function Dashboard() {
               color="primary"
               className="ms-3"
               onClick={() => {
-                setShowfolderform(true)
+                fetchFolders('folder')
               }}
             >
               <div className="d-flex flex-column justify-content-center align-items-center">
@@ -186,7 +192,12 @@ function Dashboard() {
         </Suspense>
       ) : (
         // Fallback or another condition
-        <div>No matching condition</div>
+        <NoteModal
+          passwordvisible={shownoteform}
+          folders={foldersList}
+          passwordlist={setPasswordsList}
+          handleClick={handleClick}
+        />
       )}
     </>
   )

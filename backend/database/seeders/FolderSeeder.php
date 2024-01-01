@@ -14,7 +14,7 @@ class FolderSeeder extends Seeder
     public function run(): void
     {
         Folders::insert([
-            ['folder_name' => 'uncategorized']
+            ['user_id'=>1,'folder_name' => 'uncategorized','created_at'=>now(),'updated_at'=>now()]
         ]);
     }
 }

@@ -1,3 +1,5 @@
+import api from '../redux-state/api'
+
 export const NotAuthenticatedHandler = (errors) => {
   if (
     errors.hasOwnProperty('response') &&
@@ -9,4 +11,13 @@ export const NotAuthenticatedHandler = (errors) => {
 
   // You can also return some JSX if needed
   return false
+}
+
+export const GetUserEmail = async () => {
+  try {
+    const response = await api.post('/get-user')
+    return { emailfound: true, email: response.data.user.email }
+  } catch (error) {
+    return { emailfound: false, error: error }
+  }
 }

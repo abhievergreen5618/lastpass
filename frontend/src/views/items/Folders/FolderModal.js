@@ -41,11 +41,8 @@ function FolderForm(props) {
   })
 
   const initialValues = {
-    url: '',
-    name: '',
-    folder: '',
-    username: '',
-    password: '',
+    folder_name: '',
+    folder_parent: '',
   }
 
   useEffect(() => {
@@ -139,26 +136,14 @@ function FolderForm(props) {
                   />
                   <CFormFeedback invalid>{errors.folder_name}</CFormFeedback>
                 </CCol>
-                <CCol md={6} className="my-2">
-                  <CFormInput
-                    type="text"
-                    id="name"
-                    label="Name"
-                    name="name"
-                    value={values.name}
-                    onChange={handleChange}
-                    invalid={touched.name && errors.name ? true : false}
-                  />
-                  <CFormFeedback invalid>{errors.name}</CFormFeedback>
-                </CCol>
-                <CCol md={6} className="my-2">
+                <CCol md={12} className="my-2">
                   <CFormSelect
                     id="inputState"
                     label="Folder"
-                    name="folder"
+                    name="folder_parent"
                     onChange={handleChange}
-                    invalid={touched.folder && errors.folder ? true : false}
-                    value={values.folder}
+                    invalid={touched.folder_parent && errors.folder_parent ? true : false}
+                    value={values.folder_parent}
                   >
                     <option value="">Choose...</option>
                     {foldersList.map((folder) => (
@@ -167,44 +152,7 @@ function FolderForm(props) {
                       </option>
                     ))}
                   </CFormSelect>
-                  <CFormFeedback invalid>{errors.folder}</CFormFeedback>
-                </CCol>
-                <CCol md={6} className="my-2">
-                  <CFormInput
-                    type="text"
-                    id="username"
-                    label="Username"
-                    name="username"
-                    value={values.username}
-                    onChange={handleChange}
-                    invalid={touched.username && errors.username ? true : false}
-                  />
-                  <CFormFeedback invalid>{errors.username}</CFormFeedback>
-                </CCol>
-                <CCol md={6} className="my-2">
-                  <CFormInput
-                    type="password"
-                    id="password"
-                    label="Site password"
-                    name="password"
-                    value={values.password}
-                    onChange={handleChange}
-                    invalid={touched.password && errors.password ? true : false}
-                  />
-                  <CFormFeedback invalid>{errors.password}</CFormFeedback>
-                </CCol>
-                <CCol xs={12} className="my-2">
-                  <CFormTextarea
-                    id="notes"
-                    label="Notes"
-                    rows={3}
-                    text="Must be 8-20 words long."
-                    value={values.notes}
-                    onChange={handleChange}
-                    name="notes"
-                    invalid={touched.notes && errors.notes ? true : false}
-                  ></CFormTextarea>
-                  <CFormFeedback invalid>{errors.notes}</CFormFeedback>
+                  <CFormFeedback invalid>{errors.folder_parent}</CFormFeedback>
                 </CCol>
               </CRow>
             </CModalBody>

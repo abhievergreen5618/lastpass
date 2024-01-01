@@ -57,11 +57,7 @@ class FoldersController extends Controller
             Folders::create([
                 'user_id' => $user->id,
                 'name' => $request['name'],
-                'folder_id' => $request['folder'] ,
-                'url' => $request['url'],
-                'username' => $request['username'],
-                'password' => $request['password'],
-                'notes' => $request['notes'] || '',
+                'folderparent' => $request['folderparent'],
             ]);
 
             // Optionally, you can return a success response

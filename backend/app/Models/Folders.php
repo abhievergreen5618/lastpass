@@ -10,6 +10,7 @@ class Folders extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'folder_name',
         'parent',
         'sub_parent',
