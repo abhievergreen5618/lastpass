@@ -17,7 +17,7 @@ import {
   CCardTitle,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { cilPlus, cilLockLocked, cilFolder } from '@coreui/icons'
+import { cilPlus, cilLockLocked, cilFolder, cilNotes } from '@coreui/icons'
 import { toast } from 'react-toastify'
 
 import api from '../../redux-state/api'
@@ -92,7 +92,9 @@ function Dashboard() {
         // Assuming setShowfolderform and setShowPasswordForm are asynchronous, use await
         if (type === 'password') {
           await setShowPasswordForm(true)
-        } else {
+        } else if (type === 'notes') {
+          await setShowNoteform(true)
+        } else if (type === 'folders') {
           await setShowfolderform(true)
         }
       }
@@ -179,6 +181,17 @@ function Dashboard() {
                 <CIcon icon={cilFolder} size="lg" className="ml-2 text" /> Folder
               </div>
             </CButton>
+            <CButton
+              color="primary"
+              className="ms-3"
+              onClick={() => {
+                fetchFolders('notes')
+              }}
+            >
+              <div className="d-flex flex-column justify-content-center align-items-center">
+                <CIcon icon={cilNotes} size="lg" className="ml-2 text" /> Notes
+              </div>
+            </CButton>
           </CModalBody>
         </CModal>
       ) : setShowfolderform ? (
@@ -190,7 +203,7 @@ function Dashboard() {
             handleClick={handleClick}
           />
         </Suspense>
-      ) : (
+      ) : setShowNoteform ? (
         // Fallback or another condition
         <NoteModal
           passwordvisible={shownoteform}
@@ -198,6 +211,8 @@ function Dashboard() {
           passwordlist={setPasswordsList}
           handleClick={handleClick}
         />
+      ) : (
+        <></>
       )}
     </>
   )

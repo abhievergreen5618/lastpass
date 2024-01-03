@@ -46,6 +46,7 @@ function FolderForm(props) {
   }
 
   useEffect(() => {
+    console.log('test')
     // Your useEffect logic goes here
     console.log('Component mounted!')
     // Cleanup function (optional)
