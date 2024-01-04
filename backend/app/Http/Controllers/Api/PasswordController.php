@@ -170,31 +170,25 @@ class PasswordController extends Controller
 public function destroy(string $id)
 {
     try {
-        // Validate the ID parameter
         $validator = Validator::make(
-            ['id' => $id],
-            ['id' => [
-                'required',
-                Rule::exists('passwords', 'id')->where(function ($query) {
-                    // Add a condition to check if the password belongs to the authenticated user
-                    $user = JWTAuth::parseToken()->authenticate();
-                    $query->where('user_id', $user->id);
-                }),
-            ]],
-            ['required' => 'ID is required', 'exists' => 'Invalid ID']
+            $request->all(),
+            [
+                'id' => 'required', 
+            ],
+            [
+                'required' => 'Field is required',
+            ]
         );
 
         // Check if validation fails
         if ($validator->fails()) {
-            return response()->json(['message' => 'Invalid ID', 'errors' => $validator->errors()], 422);
+            return response()->json(['message' => 'Oops! Something went wrong with your submission.', 'errors' => $validator->errors()], 422);
         }
 
-        // If validation passes, proceed to delete the password
-        // Attempt to authenticate the user based on the JWT token in the request header
         $user = JWTAuth::parseToken()->authenticate();
         
         // Find the password by ID and user ID
-        $password = Password::where('id', $id)->where('user_id', $user->id)->first();
+        $password = Password::where('id', $id)->first();
 
         if (!$password) {
             // If the password is not found, return a message
