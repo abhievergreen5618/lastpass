@@ -33,5 +33,5 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/getfolderslist', [FoldersController::class, 'list']);
     Route::post('/createfolder', [FoldersController::class, 'store']);
     Route::post('/recentpasswordlist', [PasswordController::class, 'recentpasswordlist']);
-    Route::post('/deletepassword', [PasswordController::class, 'destroy']);
+    Route::post('/deletepassword/{id}', [PasswordController::class, 'destroy']);
 });

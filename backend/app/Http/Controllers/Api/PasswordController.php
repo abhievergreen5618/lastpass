@@ -142,47 +142,11 @@ class PasswordController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    // public function destroy(string $id)
-    // {
-    //     //
-    //     try {
-    //         // Attempt to authenticate the user based on the JWT token in the request header
-    //         $user = JWTAuth::parseToken()->authenticate();
-    //         $passwords = Password::where('id',$id)->delete();
-
-    //         if ($passwords->isNotEmpty()) {
-    //             return response()->json(['passwords' => $passwords]);
-    //         } else {
-    //             // If no folders are found, return a message
-    //             return response()->json(['passwords' => []]);
-    //         }
-    //     } catch (\Exception $e) {
-    //         Log::error('Error creating password: ' . $e->getMessage());
-    //         // If an exception occurs, return an error response
-    //         return response()->json(['error' => 'Unauthorized'], 401);
-    //     }
-    // }
-
 
 
 public function destroy(string $id)
 {
     try {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'id' => 'required', 
-            ],
-            [
-                'required' => 'Field is required',
-            ]
-        );
-
-        // Check if validation fails
-        if ($validator->fails()) {
-            return response()->json(['message' => 'Oops! Something went wrong with your submission.', 'errors' => $validator->errors()], 422);
-        }
-
         $user = JWTAuth::parseToken()->authenticate();
         
         // Find the password by ID and user ID
