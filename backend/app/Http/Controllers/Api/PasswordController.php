@@ -37,6 +37,26 @@ class PasswordController extends Controller
         }
     }
 
+    public function recentpasswordlist()
+    {
+        try {
+            // Attempt to authenticate the user based on the JWT token in the request header
+            $user = JWTAuth::parseToken()->authenticate();
+            $passwords = Password::where('user_id',$user->id)->orderBy('lastused', 'desc')->get();
+
+            if ($passwords->isNotEmpty()) {
+                return response()->json(['passwords' => $passwords]);
+            } else {
+                // If no folders are found, return a message
+                return response()->json(['passwords' => []]);
+            }
+        } catch (\Exception $e) {
+            Log::error('Error creating password: ' . $e->getMessage());
+            // If an exception occurs, return an error response
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      */
