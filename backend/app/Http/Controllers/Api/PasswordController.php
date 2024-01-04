@@ -165,45 +165,45 @@ class PasswordController extends Controller
 
 
 
-// public function destroy(string $id)
-// {
-//     try {
-//         $validator = Validator::make(
-//             $request->all(),
-//             [
-//                 'id' => 'required', 
-//             ],
-//             [
-//                 'required' => 'Field is required',
-//             ]
-//         );
+public function destroy(string $id)
+{
+    try {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'id' => 'required', 
+            ],
+            [
+                'required' => 'Field is required',
+            ]
+        );
 
-//         // Check if validation fails
-//         if ($validator->fails()) {
-//             return response()->json(['message' => 'Oops! Something went wrong with your submission.', 'errors' => $validator->errors()], 422);
-//         }
+        // Check if validation fails
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Oops! Something went wrong with your submission.', 'errors' => $validator->errors()], 422);
+        }
 
-//         $user = JWTAuth::parseToken()->authenticate();
+        $user = JWTAuth::parseToken()->authenticate();
         
-//         // Find the password by ID and user ID
-//         $password = Password::where('id', $id)->first();
+        // Find the password by ID and user ID
+        $password = Password::where('id', $id)->first();
 
-//         if (!$password) {
-//             // If the password is not found, return a message
-//             return response()->json(['message' => 'Password not found'], 404);
-//         }
+        if (!$password) {
+            // If the password is not found, return a message
+            return response()->json(['message' => 'Password not found'], 404);
+        }
 
-//         // Delete the password
-//         $password->delete();
+        // Delete the password
+        $password->delete();
 
-//         // Optionally, you can return a success response
-//         return response()->json(['message' => 'Password deleted successfully'], 200);
-//     } catch (\Exception $e) {
-//         Log::error('Error deleting password: ' . $e->getMessage());
-//         // If an exception occurs, return an error response
-//         return response()->json(['error' => 'Unauthorized'], 401);
-//     }
-// }
+        // Optionally, you can return a success response
+        return response()->json(['message' => 'Password deleted successfully'], 200);
+    } catch (\Exception $e) {
+        Log::error('Error deleting password: ' . $e->getMessage());
+        // If an exception occurs, return an error response
+        return response()->json(['error' => 'Unauthorized'], 401);
+    }
+}
 
 
 }
