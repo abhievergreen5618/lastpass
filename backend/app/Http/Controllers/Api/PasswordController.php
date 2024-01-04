@@ -42,7 +42,7 @@ class PasswordController extends Controller
         try {
             // Attempt to authenticate the user based on the JWT token in the request header
             $user = JWTAuth::parseToken()->authenticate();
-            $passwords = Password::where('user_id',$user->id)->orderBy('lastused', 'desc')->get()->first();
+            $passwords = Password::where('user_id',$user->id)->orderBy('lastused', 'desc')->get();
 
             if ($passwords->isNotEmpty()) {
                 return response()->json(['passwords' => $passwords]);
@@ -148,7 +148,7 @@ class PasswordController extends Controller
         try {
             // Attempt to authenticate the user based on the JWT token in the request header
             $user = JWTAuth::parseToken()->authenticate();
-            $passwords = Password::where('user_id',$user->id)->delete();
+            $passwords = Password::where('id',$id)->delete();
 
             if ($passwords->isNotEmpty()) {
                 return response()->json(['passwords' => $passwords]);
