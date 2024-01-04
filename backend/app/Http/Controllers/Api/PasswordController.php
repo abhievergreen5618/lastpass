@@ -142,25 +142,76 @@ class PasswordController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
-        try {
-            // Attempt to authenticate the user based on the JWT token in the request header
-            $user = JWTAuth::parseToken()->authenticate();
-            $passwords = Password::where('id',$id)->delete();
+    // public function destroy(string $id)
+    // {
+    //     //
+    //     try {
+    //         // Attempt to authenticate the user based on the JWT token in the request header
+    //         $user = JWTAuth::parseToken()->authenticate();
+    //         $passwords = Password::where('id',$id)->delete();
 
-            if ($passwords->isNotEmpty()) {
-                return response()->json(['passwords' => $passwords]);
-            } else {
-                // If no folders are found, return a message
-                return response()->json(['passwords' => []]);
-            }
-        } catch (\Exception $e) {
-            Log::error('Error creating password: ' . $e->getMessage());
-            // If an exception occurs, return an error response
-            return response()->json(['error' => 'Unauthorized'], 401);
+    //         if ($passwords->isNotEmpty()) {
+    //             return response()->json(['passwords' => $passwords]);
+    //         } else {
+    //             // If no folders are found, return a message
+    //             return response()->json(['passwords' => []]);
+    //         }
+    //     } catch (\Exception $e) {
+    //         Log::error('Error creating password: ' . $e->getMessage());
+    //         // If an exception occurs, return an error response
+    //         return response()->json(['error' => 'Unauthorized'], 401);
+    //     }
+    // }
+
+    use Illuminate\Validation\Rule;
+
+// ...
+
+public function destroy(string $id)
+{
+    try {
+        // Validate the ID parameter
+        $validator = Validator::make(
+            ['id' => $id],
+            ['id' => [
+                'required',
+                Rule::exists('passwords', 'id')->where(function ($query) {
+                    // Add a condition to check if the password belongs to the authenticated user
+                    $user = JWTAuth::parseToken()->authenticate();
+                    $query->where('user_id', $user->id);
+                }),
+            ]],
+            ['required' => 'ID is required', 'exists' => 'Invalid ID']
+        );
+
+        // Check if validation fails
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Invalid ID', 'errors' => $validator->errors()], 422);
         }
+
+        // If validation passes, proceed to delete the password
+        // Attempt to authenticate the user based on the JWT token in the request header
+        $user = JWTAuth::parseToken()->authenticate();
+        
+        // Find the password by ID and user ID
+        $password = Password::where('id', $id)->where('user_id', $user->id)->first();
+
+        if (!$password) {
+            // If the password is not found, return a message
+            return response()->json(['message' => 'Password not found'], 404);
+        }
+
+        // Delete the password
+        $password->delete();
+
+        // Optionally, you can return a success response
+        return response()->json(['message' => 'Password deleted successfully'], 200);
+    } catch (\Exception $e) {
+        Log::error('Error deleting password: ' . $e->getMessage());
+        // If an exception occurs, return an error response
+        return response()->json(['error' => 'Unauthorized'], 401);
     }
+}
+
 
 }
