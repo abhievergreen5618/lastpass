@@ -40,11 +40,11 @@ class PasswordController extends Controller
     public function checkurl(Request $request)
     {
         $request->validate([
-            'current_url' => 'required|url',
+            'url' => 'required|url',
         ]);
 
         $user = JWTAuth::parseToken()->authenticate();
-        $url = Password::where('url', $request->current_url)->first();
+        $url = Password::where('url', $request->url)->first();
 
         if ($url) {
             return response()->json([
