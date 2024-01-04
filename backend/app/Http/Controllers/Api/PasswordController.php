@@ -37,6 +37,29 @@ class PasswordController extends Controller
         }
     }
 
+    public function checkurl(Request $request)
+    {
+        $request->validate([
+            'current_url' => 'required|url',
+        ]);
+
+        $user = JWTAuth::parseToken()->authenticate();
+        $url = Password::where('url', $request->current_url)->first();
+
+        if ($url) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'URL found in the database.',
+                'url_data' => $url->toArray(),
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'URL not found in the database.',
+            ]);
+        }
+    }
+
     public function recentpasswordlist()
     {
         try {
