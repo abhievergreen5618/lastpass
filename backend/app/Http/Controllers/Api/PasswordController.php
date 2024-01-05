@@ -39,6 +39,7 @@ class PasswordController extends Controller
 
     public function recentuseddata(Request $request)
     {
+        try {
         $request->validate([
             'url' => 'required|url',
         ]);
@@ -58,51 +59,48 @@ class PasswordController extends Controller
                 'message' => 'URL not found in the database.',
             ]);
         }
+        } catch (\Exception $e) {
+        Log::error('Error creating password: ' . $e->getMessage());
+        // If an exception occurs, return an error response
+        return response()->json(['error' => 'Unauthorized'], 401);
+        }
     }
 
     
-    public function alertdata(Request $request)
+    public function alertdata()
     {
-        $request->validate([
-            'username' => 'required',
-        ]);
+        
 
         $user = JWTAuth::parseToken()->authenticate();
-        $username = Password::where('username', $request->username)->first();
+        $password = Password::latest()->first();
 
-        if ($url) {
-            return response()->json([
-                'status' => 'success',
-                'message' => 'username found in the database.',
-                'username' => $username->toArray(),
-            ]);
+        if ($passwords->isNotEmpty()) {
+            return response()->json(['passwords' => $passwords]);
         } else {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'username not found in the database.',
-            ]);
+            // If no folders are found, return a message
+            return response()->json(['passwords' => []]);
         }
     }
 
-    public function recentpasswordlist()
-    {
-        try {
-            // Attempt to authenticate the user based on the JWT token in the request header
-            $user = JWTAuth::parseToken()->authenticate();
-            $passwords = Password::where('user_id',$user->id)->orderBy('lastused', 'desc')->get();
+    // public function recentpasswordlist()
+    // {
+    //     try {
+    //         // Attempt to authenticate the user based on the JWT token in the request header
+    //         $user = JWTAuth::parseToken()->authenticate();
+    //         $passwords = Password::where('user_id',$user->id)->latest('lastused', 'desc')->get()->first();
 
-            if ($passwords->isNotEmpty()) {
-                return response()->json(['passwords' => $passwords]);
-            } else {
-                // If no folders are found, return a message
-                return response()->json(['passwords' => []]);
-            }
-        } catch (\Exception $e) {
-            Log::error('Error creating password: ' . $e->getMessage());
-            // If an exception occurs, return an error response
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-    }
+    //         if ($passwords->isNotEmpty()) {
+    //             return response()->json(['passwords' => $passwords]);
+    //         } else {
+    //             // If no folders are found, return a message
+    //             return response()->json(['passwords' => []]);
+    //         }
+    //     } catch (\Exception $e) {
+    //         Log::error('Error creating password: ' . $e->getMessage());
+    //         // If an exception occurs, return an error response
+    //         return response()->json(['error' => 'Unauthorized'], 401);
+    //     }
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -191,17 +189,19 @@ class PasswordController extends Controller
      */
 
 
-public function destroy(string $id)
+public function destroy(Request $request, string $id)
 {
     try {
+        $request->validate([
+            'id' => 'required',
+        ]);
+
         $user = JWTAuth::parseToken()->authenticate();
-        
-        // Find the password by ID and user ID
         $password = Password::where('id', $id)->first();
 
-        if (!$password) {
-            // If the password is not found, return a message
-            return response()->json(['message' => 'Password not found'], 404);
+        if ($password->user_id !== $user->id) {
+            // If the user is not the owner, return an unauthorized response
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
 
         // Delete the password
