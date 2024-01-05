@@ -50,7 +50,7 @@ class PasswordController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'URL found in the database.',
-                'url_data' => $url->toArray(),
+                'url' => $url->toArray(),
             ]);
         } else {
             return response()->json([
