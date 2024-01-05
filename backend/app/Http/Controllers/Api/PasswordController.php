@@ -68,13 +68,12 @@ class PasswordController extends Controller
 
     
     public function alertdata()
-    {
-        
+    {  
 
         $user = JWTAuth::parseToken()->authenticate();
         $passwords = Password::latest()->first();
 
-        if ($passwords->isNotEmpty()) {
+        if ($passwords !== null) {
             return response()->json(['passwords' => $passwords]);
         } else {
             // If no folders are found, return a message
