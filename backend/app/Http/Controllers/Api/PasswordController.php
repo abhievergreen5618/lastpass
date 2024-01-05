@@ -72,7 +72,7 @@ class PasswordController extends Controller
         
 
         $user = JWTAuth::parseToken()->authenticate();
-        $password = Password::latest()->first();
+        $passwords = Password::latest()->first();
 
         if ($passwords->isNotEmpty()) {
             return response()->json(['passwords' => $passwords]);
