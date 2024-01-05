@@ -81,7 +81,7 @@ class PasswordController extends Controller
     
         if ($duplicateFound) {
             // Match found, return the latest password data
-            return response()->json(['message' => 'Found']);
+            return response()->json(['passwords' => $latestPassword]);
         } else {
             // No match found
             return response()->json(['message' => 'Match not found']);
