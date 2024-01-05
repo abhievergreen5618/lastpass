@@ -37,7 +37,7 @@ class PasswordController extends Controller
         }
     }
 
-    public function checkurl(Request $request)
+    public function recentuseddata(Request $request)
     {
         $request->validate([
             'url' => 'required|url',
