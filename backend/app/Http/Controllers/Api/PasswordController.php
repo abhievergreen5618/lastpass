@@ -68,18 +68,26 @@ class PasswordController extends Controller
 
     
     public function alertdata()
-    {  
-
+    {
         $user = JWTAuth::parseToken()->authenticate();
-        $passwords = Password::latest()->first();
-
-        if ($passwords !== null) {
-            return response()->json(['passwords' => $passwords]);
+        
+        // Get the latest password
+        $latestPassword = Password::latest()->first();
+    
+        $duplicateFound = Password::where('username', $latestPassword->username)
+        ->where('password', $latestPassword->password)
+        ->where('id', '!=', $latestPassword->id)
+        ->exists();
+    
+        if ($duplicateFound) {
+            // Match found, return the latest password data
+            return response()->json(['message' => 'Found']);
         } else {
-            // If no folders are found, return a message
-            return response()->json(['passwords' => []]);
+            // No match found
+            return response()->json(['message' => 'Match not found']);
         }
     }
+    
 
     // public function recentpasswordlist()
     // {

@@ -30,6 +30,7 @@ class FoldersController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    
     public function store(Request $request)
     {
         try {
@@ -41,7 +42,6 @@ class FoldersController extends Controller
                 $request->all(),
                 [
                     'foldername' => 'required',
-                    'user_id' => 'required',
                 ],
                 [
                     'required' => 'Field is required',
@@ -56,6 +56,7 @@ class FoldersController extends Controller
             // Create a new password record
             Folders::create([
                 'user_id' => $user->id,
+
                 'name' => $request['name'],
                 'folderparent' => $request['folderparent'],
             ]);
