@@ -60,6 +60,30 @@ class PasswordController extends Controller
         }
     }
 
+    
+    public function alertdata(Request $request)
+    {
+        $request->validate([
+            'username' => 'required',
+        ]);
+
+        $user = JWTAuth::parseToken()->authenticate();
+        $username = Password::where('username', $request->username)->first();
+
+        if ($url) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'username found in the database.',
+                'username' => $username->toArray(),
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'username not found in the database.',
+            ]);
+        }
+    }
+
     public function recentpasswordlist()
     {
         try {
