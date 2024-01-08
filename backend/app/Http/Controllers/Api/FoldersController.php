@@ -40,7 +40,7 @@ class FoldersController extends Controller
             // Validate the request data
             $validator = Validator::make(
                 $request->all(),
-                [q
+                [
                     'folder_name' => 'required',
                 ],
                 [
