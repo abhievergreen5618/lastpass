@@ -37,21 +37,6 @@ class FoldersController extends Controller
         {
             $user = JWTAuth::parseToken()->authenticate();
 
-            // Validate the request data
-            $validator = Validator::make(
-                $request->all(),
-                [
-                    'folder_name' => 'required',
-                ],
-                [
-                    'required' => 'Field is required',
-                ]
-            );
-
-            if($validator->fails()) {
-                return response()->json(['message','Oops! Something went wrong']);
-            }
-
             Folders::create ([
                 'user_id' => $user->id,
                 'folder_name' => $request['folder_name'],
