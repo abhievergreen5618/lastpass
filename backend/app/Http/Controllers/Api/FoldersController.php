@@ -47,6 +47,12 @@ class FoldersController extends Controller
             if ($validator->fails()) {
                 return response()->json(['message' => 'Oops! Something went wrong with your submission.', 'errors' => $validator->errors()], 422);
             }
+            Log::info('Creating Folder Data: ' . json_encode([
+                'user_id' => $user->id,
+                'folder_name' => $request['folder_name'],
+                'parent' => $request['parent'],
+                'sub_parent' => $request['sub_parent'],
+            ]));
             
             Folders::create ([
                 'user_id' => $user->id,
