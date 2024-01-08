@@ -33,11 +33,10 @@ class FoldersController extends Controller
     
     public function store(Request $request)
     {
-        try {
-            // Attempt to authenticate the user based on the JWT token in the request header
+        try 
+        {
             $user = JWTAuth::parseToken()->authenticate();
 
-            Log::info('Authenticated User ID: ' . $user->id);
             // Validate the request data
             $validator = Validator::make(
                 $request->all(),
@@ -49,25 +48,22 @@ class FoldersController extends Controller
                 ]
             );
 
-            // Check if validation fails
             if($validator->fails()) {
-                return response()->json(['message' => 'Oops! Something went wrong with your submission.', 'errors' => $validator->errors()], 422);
+                return response()->json(['message','Oops! Something went wrong']);
             }
 
-            // Create a new folder record
-            Folders::create([
+            Folders::create ([
                 'user_id' => $user->id,
                 'folder_name' => $request['folder_name'],
                 'parent' => $request['parent'],
                 'sub_parent' => $request['sub_parent'],
             ]);
-
-            // Optionally, you can return a success response
-            return response()->json(['message' => 'Folder created successfully'], 200);
+            return response()->json(['message' => 'Password created successfully'], 200);
         } catch (\Exception $e) {
             Log::error('Error creating password: ' . $e->getMessage());
             // If an exception occurs, return an error response
             return response()->json(['error' => 'Unauthorized'], 401);
+        
         }
     }
 
