@@ -54,13 +54,12 @@ class FoldersController extends Controller
                 return response()->json(['message' => 'Oops! Something went wrong with your submission.', 'errors' => $validator->errors()], 422);
             }
 
-            // Create a new password record
+            // Create a new folder record
             Folders::create([
                 'user_id' => $user->id,
                 'folder_name' => $request['folder_name'],
                 'parent' => $request['parent'],
                 'sub_parent' => $request['sub_parent'],
-                
             ]);
 
             // Optionally, you can return a success response
