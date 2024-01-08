@@ -203,10 +203,7 @@ public function destroy(Request $request, string $id)
         $user = JWTAuth::parseToken()->authenticate();
         $password = Password::where('id', $id)->first();
 
-        if ($password->user_id !== $user->id) {
-            // If the user is not the owner, return an unauthorized response
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
+        
 
         // Delete the password
         $password->delete();
