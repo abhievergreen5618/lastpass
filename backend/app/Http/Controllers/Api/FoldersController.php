@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
+use App\Models\User;
 
 class FoldersController extends Controller
 {
@@ -31,84 +32,47 @@ class FoldersController extends Controller
      * Store a newly created resource in storage.
      */
     
-    // public function store(Request $request)
-    // {
-    //     try 
-    //     {
-    //         $user = JWTAuth::parseToken()->authenticate();
-
-    //         $validator = Validator::make(
-    //             $request->all(),
-    //                 [
-    //                     'folder_name' => 'required',
-    //                 ]
-    //         );
-
-    //         if ($validator->fails()) {
-    //             return response()->json(['message' => 'Oops! Something went wrong with your submission.', 'errors' => $validator->errors()], 422);
-    //         }
-    //         Log::info('Creating Folder Data: ' . json_encode([
-    //             'user_id' => $user->id,
-    //             'folder_name' => $request['folder_name'],
-    //             'parent' => $request['parent'],
-    //             'sub_parent' => $request['sub_parent'],
-    //         ]));
-            
-    //         Folders::create ([
-    //             'user_id' => $user->id,
-    //             'folder_name' => $request['folder_name'],
-    //             'parent' => $request['parent'],
-    //             'sub_parent' => $request['sub_parent'],
-    //         ]);
-
-    //         return response()->json(['message' => 'Password created successfully'], 200);
-    //     } catch (\Exception $e) {
-    //         Log::error('Error creating password: ' . $e->getMessage());
-    //         // If an exception occurs, return an error response
-    //         return response()->json(['error' => 'Unauthorized'], 401);
-        
-    //     }
-    // }
-
-
     public function store(Request $request)
-{
-    try {
-        $user = JWTAuth::parseToken()->authenticate();
+    {
+        try 
+        {
+            $user = JWTAuth::parseToken()->authenticate();
 
-        $validator = Validator::make($request->all(), [
-            'folder_name' => 'required',
-        ]);
+            $validator = Validator::make(
+                $request->all(),
+                    [
+                        'folder_name' => 'required',
+                    ]
+            );
 
-        if ($validator->fails()) {
-            return response()->json(['message' => 'Oops! Something went wrong with your submission.', 'errors' => $validator->errors()], 422);
+            if ($validator->fails()) {
+                return response()->json(['message' => 'Oops! Something went wrong with your submission.', 'errors' => $validator->errors()], 422);
+            }
+            Log::info('Creating Folder Data: ' . json_encode([
+                'user_id' => $user->id,
+                'folder_name' => $request['folder_name'],
+                'parent' => $request['parent'],
+                'sub_parent' => $request['sub_parent'],
+            ]));
+            
+            Folders::create ([
+                'user_id' => $user->id,
+                'folder_name' => $request['folder_name'],
+                'parent' => $request['parent'],
+                'sub_parent' => $request['sub_parent'],
+            ]);
+
+            return response()->json(['message' => 'Password created successfully'], 200);
+        } catch (\Exception $e) {
+            Log::error('Error creating password: ' . $e->getMessage());
+            // If an exception occurs, return an error response
+            return response()->json(['error' => 'Unauthorized'], 401);
+        
         }
-
-        // Create an instance of the Folders model
-        $folder = new Folders();
-
-        // Fill the attributes using the request data
-        $folder->fill([
-            'user_id' => $user->id,
-            'folder_name' => $request['folder_name'],
-            'parent' => $request['parent'],
-            'sub_parent' => $request['sub_parent'],
-        ]);
-
-        // Save the folder to the database
-        $folder->save();
-
-        // Log success message
-        Log::info('Folder created successfully');
-
-        return response()->json(['message' => 'Folder created successfully'], 200);
-    } catch (\Exception $e) {
-        // Log the exception for debugging
-        Log::error('Error creating folder: ' . $e->getMessage());
-        // If an exception occurs, return an error response
-        return response()->json(['error' => 'Unauthorized'], 401);
     }
-}
+
+
+
 
 
     /**
