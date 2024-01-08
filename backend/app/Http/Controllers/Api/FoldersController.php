@@ -37,6 +37,7 @@ class FoldersController extends Controller
             // Attempt to authenticate the user based on the JWT token in the request header
             $user = JWTAuth::parseToken()->authenticate();
 
+            Log::info('Authenticated User ID: ' . $user->id);
             // Validate the request data
             $validator = Validator::make(
                 $request->all(),
