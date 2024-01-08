@@ -56,9 +56,7 @@ class FoldersController extends Controller
             // Create a new password record
             Folders::create([
                 'user_id' => $user->id,
-
-                'name' => $request['name'],
-                'folderparent' => $request['folderparent'],
+                'foldername' => $request['foldername'],
             ]);
 
             // Optionally, you can return a success response
