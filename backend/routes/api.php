@@ -37,3 +37,4 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/recentuseddata', [PasswordController::class, 'recentuseddata']);
     Route::post('/alertdata', [PasswordController::class, 'alertdata']);
 });
+ 

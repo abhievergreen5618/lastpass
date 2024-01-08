@@ -41,7 +41,7 @@ class FoldersController extends Controller
             $validator = Validator::make(
                 $request->all(),
                 [
-                    'foldername' => 'required',
+                    'folder_name' => 'required',
                 ],
                 [
                     'required' => 'Field is required',
@@ -56,11 +56,14 @@ class FoldersController extends Controller
             // Create a new password record
             Folders::create([
                 'user_id' => $user->id,
-                'foldername' => $request['foldername'],
+                'folder_name' => $request['folder_name'],
+                'parent' => $request['parent'],
+                'sub_parent' => $request['sub_parent'],
+                
             ]);
 
             // Optionally, you can return a success response
-            return response()->json(['message' => 'Password created successfully'], 200);
+            return response()->json(['message' => 'Folder created successfully'], 200);
         } catch (\Exception $e) {
             Log::error('Error creating password: ' . $e->getMessage());
             // If an exception occurs, return an error response
