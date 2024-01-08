@@ -82,7 +82,9 @@ class PasswordController extends Controller
         if ($duplicateFound) {
             // Match found, return the latest password data
             return response()->json(['passwords' => $latestPassword]);
-        } 
+        } else {
+            return response()->json(['message' => 'Match not found' ]);
+        }
     }
     
 
@@ -193,26 +195,18 @@ class PasswordController extends Controller
      */
 
 
-public function destroy(Request $request, string $id)
+public function destroy(string $id)
 {
     try {
-        $request->validate([
-            'id' => 'required',
-        ]);
-
+       
         $user = JWTAuth::parseToken()->authenticate();
         $password = Password::where('id', $id)->first();
-
-        
-
-        // Delete the password
         $password->delete();
 
-        // Optionally, you can return a success response
         return response()->json(['message' => 'Password deleted successfully'], 200);
     } catch (\Exception $e) {
         Log::error('Error deleting password: ' . $e->getMessage());
-        // If an exception occurs, return an error response
+        // If an exception occurs, return an error response1
         return response()->json(['error' => 'Unauthorized'], 401);
     }
 }
