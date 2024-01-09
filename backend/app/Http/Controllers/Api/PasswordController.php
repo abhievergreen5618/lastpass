@@ -183,30 +183,10 @@ class PasswordController extends Controller
         {
             $user = JWTAuth::parseToken()->authenticate();
 
-            $passwords = Password::where('id',$id)->first();
+            $password = Password::where('id',$id)->first();
 
             if (!$password) {
                 return response()->json(['message' => 'Password not found'], 404);
-            }
-
-            $validator = Validator::make(
-                $request->all(),
-                [
-                    'name' => 'required',
-                    'folder' => 'required',
-                    'url' => 'required',
-                    'username' => 'required',
-                    'password' => 'required',
-                    'notes' => 'max:255',
-                ],
-                [
-                    'required' => 'Field is required',
-                ]
-            );
-    
-            // Check if validation fails
-            if ($validator->fails()) {
-                return response()->json(['message' => 'Oops! Something went wrong with your submission.', 'errors' => $validator->errors()], 422);
             }
     
             $password->update([
