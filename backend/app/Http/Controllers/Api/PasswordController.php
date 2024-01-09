@@ -189,14 +189,14 @@ class PasswordController extends Controller
                 return response()->json(['message' => 'Password not found'], 404);
             }
     
-            $password->update([
-                'name' => $request['name'],
-                'folder_id' => $request['folder'],
-                'url' => $request['url'],
-                'username' => $request['username'],
-                'password' => $request['password'],
-                'notes' => $request['notes'] ?? '',
-            ]);
+            // $password->update([
+            //     'name' => $request['name'],
+            //     'folder_id' => $request['folder'],
+            //     'url' => $request['url'],
+            //     'username' => $request['username'],
+            //     'password' => $request['password'],
+            //     'notes' => $request['notes'] ?? '',
+            // ]);
     
             return response()->json(['message' => 'Password updated successfully'], 200);
         }
