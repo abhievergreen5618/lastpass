@@ -29,6 +29,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/get-user', [AuthController::class, 'getUser']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/savepassword', [PasswordController::class, 'store']);
+    Route::post('/editpassword/{id}', [PasswordController::class, 'edit']);
     Route::post('/getpasswordlist', [PasswordController::class, 'index']);
     Route::post('/getfolderslist', [FoldersController::class, 'list']);
     Route::post('/createfolder', [FoldersController::class, 'store']);

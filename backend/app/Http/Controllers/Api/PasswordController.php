@@ -179,7 +179,31 @@ class PasswordController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        try 
+        {
+            $user = JWTAuth::parseToken()->authenticate();
+
+            $passwords = Password::where('id',$id)->first();
+
+            if (!$password) {
+                return response()->json(['message' => 'Password not found'], 404);
+            }
+            $password->update([
+                'name' => $request['name'],
+                'folder_id' => $request['folder'],
+                'url' => $request['url'],
+                'username' => $request['username'],
+                'password' => $request['password'],
+                'notes' => $request['notes'] ?? '',
+            ]);
+    
+            return response()->json(['message' => 'Password updated successfully'], 200);
+        }
+        catch (\Exception $e) {
+            Log::error('Error updating password: ' . $e->getMessage());
+            // If an exception occurs, return an error response
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
     }
 
     /**
