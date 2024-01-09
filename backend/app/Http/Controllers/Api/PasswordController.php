@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Models\Password;
 use App\Models\User;
+use App\Models\Recent;
 use Illuminate\Support\Facades\Log;
 
 
@@ -53,12 +54,27 @@ class PasswordController extends Controller
                 'message' => 'URL found in the database.',
                 'url' => $url->toArray(),
             ]);
+            
+        Recent::create([
+            'user_id' => $user->id,
+            'name' => $request['name'],
+            'folder_id' => $request['folder'],
+            'url' => $request['url'],
+            'username' => $request['username'],
+            'password' => $request['password'],
+            'notes' => $request['notes'] || '',
+        ]);
+
+        // Optionally, you can return a success response
+        return response()->json(['message' => 'Recent data added'], 200);
+    
         } else {
             return response()->json([
                 'status' => 'error',
                 'message' => 'URL not found in the database.',
             ]);
         }
+
         } catch (\Exception $e) {
         Log::error('Error creating password: ' . $e->getMessage());
         // If an exception occurs, return an error response
@@ -130,7 +146,7 @@ class PasswordController extends Controller
                 $request->all(),
                 [
                     'name' => 'required', // Assuming folder_id is required
-                    
+                    'folder' => 'required',
                     'url' => 'required',
                     'username' => 'required',
                     'password' => 'required',
@@ -177,7 +193,6 @@ class PasswordController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-
     public function edit(string $id)
     {
         try 

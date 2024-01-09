@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('passwords', function (Blueprint $table) {
+        Schema::create('recents', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users'); // Reference the 'id' column in the 'users' table
             $table->foreignId('folder_id')->constrained('folders'); // Reference the 'id' column in the 'users' table
@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string("password");
             $table->string("notes")->nullable();
             $table->timestamps();
-            $table->timestamp('lastused')->nullable();
         });
     }
 
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('passwords');
+        Schema::dropIfExists('recents');
     }
 };
