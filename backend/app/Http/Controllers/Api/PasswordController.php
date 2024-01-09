@@ -130,7 +130,7 @@ class PasswordController extends Controller
                 $request->all(),
                 [
                     'name' => 'required', // Assuming folder_id is required
-                    'folder' => 'required',
+                    
                     'url' => 'required',
                     'username' => 'required',
                     'password' => 'required',
@@ -177,7 +177,7 @@ class PasswordController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    
+
     public function edit(string $id)
     {
         try 
