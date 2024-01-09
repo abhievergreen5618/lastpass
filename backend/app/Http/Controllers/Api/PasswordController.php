@@ -188,6 +188,27 @@ class PasswordController extends Controller
             if (!$password) {
                 return response()->json(['message' => 'Password not found'], 404);
             }
+
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'name' => 'required',
+                    'folder' => 'required',
+                    'url' => 'required',
+                    'username' => 'required',
+                    'password' => 'required',
+                    'notes' => 'max:255',
+                ],
+                [
+                    'required' => 'Field is required',
+                ]
+            );
+    
+            // Check if validation fails
+            if ($validator->fails()) {
+                return response()->json(['message' => 'Oops! Something went wrong with your submission.', 'errors' => $validator->errors()], 422);
+            }
+    
             $password->update([
                 'name' => $request['name'],
                 'folder_id' => $request['folder'],
