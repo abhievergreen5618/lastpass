@@ -42,15 +42,12 @@ class PasswordController extends Controller
     public function recentuseddata(Request $request)
     {
         try {
-            $request->validate([
-                'url' => 'required|url',
-            ]);
+            
     
             $user = JWTAuth::parseToken()->authenticate();
             $passwordData = Password::where('url', $request->url)->first();
     
             if ($passwordData) {
-                // Data found in the 'Password' table, add to recent
                 $recentData = [
                     'user_id' => $user->id,
                     'name' => $passwordData->name,
