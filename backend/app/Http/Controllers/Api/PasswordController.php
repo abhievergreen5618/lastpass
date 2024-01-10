@@ -42,46 +42,46 @@ class PasswordController extends Controller
     public function recentuseddata(Request $request)
     {
         try {
-        $request->validate([
-            'url' => 'required|url',
-        ]);
-
-        $user = JWTAuth::parseToken()->authenticate();
-        $url = Password::where('url', $request->url)->first();
-
-        if ($url) {
-            return response()->json([
-                'status' => 'success',
-                'message' => 'URL found in the database.',
-                'url' => $url->toArray(),
+            $request->validate([
+                'url' => 'required|url',
             ]);
-            
-        Recent::create([
-            'user_id' => $user->id,
-            'name' => $request['name'],
-            'folder_id' => $request['folder'],
-            'url' => $request['url'],
-            'username' => $request['username'],
-            'password' => $request['password'],
-            'notes' => $request['notes'] || '',
-        ]);
-
-        // Optionally, you can return a success response
-        return response()->json(['message' => 'Recent data added'], 200);
     
-        } else {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'URL not found in the database.',
-            ]);
-        }
-
+            $user = JWTAuth::parseToken()->authenticate();
+            $passwordData = Password::where('url', $request->url)->first();
+    
+            if ($passwordData) {
+                // Data found in the 'Password' table, add to recent
+                $recentData = [
+                    'user_id' => $user->id,
+                    'name' => $passwordData->name,
+                    'folder_id' => $passwordData->folder_id,
+                    'url' => $passwordData->url,
+                    'username' => $passwordData->username,
+                    'password' => $passwordData->password,
+                    'notes' => $passwordData->notes,
+                ];
+    
+                Recent::create($recentData);
+    
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'URL found in the database. Added to Recent.',
+                    'url' => $recentData,
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'URL not found in the database.',
+                ]);
+            }
+    
         } catch (\Exception $e) {
-        Log::error('Error creating password: ' . $e->getMessage());
-        // If an exception occurs, return an error response
-        return response()->json(['error' => 'Unauthorized'], 401);
+            Log::error('Error creating password: ' . $e->getMessage());
+            // If an exception occurs, return an error response
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
     }
+    
 
     
     public function alertdata()
