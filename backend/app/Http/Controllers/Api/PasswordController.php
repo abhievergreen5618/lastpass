@@ -167,7 +167,7 @@ class PasswordController extends Controller
             Password::create([
                 'user_id' => $user->id,
                 'name' => $request['name'],
-                'folder_id' => $request['folder'],
+                'folder_id' => $request['folder'] ?? 'unauthorized',
                 'url' => $request['url'],
                 'username' => $request['username'],
                 'password' => $request['password'],
