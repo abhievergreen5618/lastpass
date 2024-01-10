@@ -57,7 +57,7 @@ class PasswordController extends Controller
                 $recentData = [
                     'user_id' => $user->id,
                     'name' => $passwordData->name,
-                    'folder_id' => $passwordData->folder_id,
+                    'folder_id' => (string) $passwordData->folder_id,
                     'url' => $passwordData->url,
                     'username' => $passwordData->username,
                     'password' => $passwordData->password,
