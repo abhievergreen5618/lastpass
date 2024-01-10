@@ -24,12 +24,19 @@ class TruncateRecentData extends Command
      * Execute the console command.
      */
     public function handle()
-{
-    $this->info('Truncate recent data started at ' . now());
-
-    // Your truncation logic here
-
-    $this->info('Truncate recent data completed at ' . now());
-}
+    {
+        try {
+            $this->info('Truncate recent data started at ' . now());
+    
+            // Your truncation logic here
+    
+            $this->info('Truncate recent data completed at ' . now());
+        } catch (\Exception $e) {
+            $this->error('Error: ' . $e->getMessage());
+            // Log the full exception details if needed
+            \Log::error('TruncateRecentData command failed: ' . $e->getMessage());
+        }
+    }
+    
 
 }
