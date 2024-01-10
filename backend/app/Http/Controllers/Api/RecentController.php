@@ -62,6 +62,26 @@ class RecentController extends Controller
             return response()->json(['error' => $e->getMessage()], 401);
         }
     }
+
+    public function index()
+    {
+        try {
+            // Attempt to authenticate the user based on the JWT token in the request header
+            $user = JWTAuth::parseToken()->authenticate();
+            $recentdata = Recent::where('user_id',$user->id)->get();
+
+            if ($recentdata->isNotEmpty()) {
+                return response()->json(['recentdata' => $recentdata]);
+            } else {
+                // If no folders are found, return a message
+                return response()->json(['recentdata' => []]);
+            }
+        } catch (\Exception $e) {
+            Log::error('Error getting recentdata: ' . $e->getMessage());
+            // If an exception occurs, return an error response
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+    }
     
 
 }

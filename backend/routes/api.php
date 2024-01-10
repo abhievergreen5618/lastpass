@@ -36,7 +36,10 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/createfolder', [FoldersController::class, 'store']);
     // Route::post('/recentpasswordlist', [PasswordController::class, 'recentpasswordlist']);
     Route::post('/deletepassword/{id}', [PasswordController::class, 'destroy']);
-    Route::post('/recentuseddata', [RecentController::class, 'recentuseddata']);
     Route::post('/alertdata', [PasswordController::class, 'alertdata']);
+
+    
+    Route::post('/recentuseddata', [RecentController::class, 'recentuseddata']);
+    Route::post('/getrecentdata', [RecentController::class, 'index']);
 });
  
