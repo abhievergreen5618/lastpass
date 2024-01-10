@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FoldersController;
 use App\Http\Controllers\Api\PasswordController;
+use App\Http\Controllers\Api\RecentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +36,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/createfolder', [FoldersController::class, 'store']);
     // Route::post('/recentpasswordlist', [PasswordController::class, 'recentpasswordlist']);
     Route::post('/deletepassword/{id}', [PasswordController::class, 'destroy']);
-    Route::post('/recentuseddata', [PasswordController::class, 'recentuseddata']);
+    Route::post('/recentuseddata', [RecentController::class, 'recentuseddata']);
     Route::post('/alertdata', [PasswordController::class, 'alertdata']);
 });
  
