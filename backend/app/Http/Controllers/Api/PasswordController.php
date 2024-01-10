@@ -86,6 +86,11 @@ class PasswordController extends Controller
     public function alertdata()
     {
         $user = JWTAuth::parseToken()->authenticate();
+
+        if (!$user) {
+            Log::error('User not authenticated with the provided token.');
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
         
         // Get the latest password
         $latestPassword = Password::latest()->first();
