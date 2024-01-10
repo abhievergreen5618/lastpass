@@ -24,12 +24,12 @@ class TruncateRecentData extends Command
      * Execute the console command.
      */
     public function handle()
-    {
-        //
-        $oneHourAgo = Carbon::now()->subHour();
+{
+    $this->info('Truncate recent data started at ' . now());
 
-        Recent::where('created_at', '<', $oneHourAgo)->delete();
+    // Your truncation logic here
 
-        $this->info('Recent data truncated successfully.');
-    }
+    $this->info('Truncate recent data completed at ' . now());
+}
+
 }
