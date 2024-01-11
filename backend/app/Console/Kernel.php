@@ -19,7 +19,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('truncate:recent')->hourly();
+        $schedule->command('app:truncate-recent-data')->hourly();
     }
 
     /*
