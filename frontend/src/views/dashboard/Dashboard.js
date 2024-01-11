@@ -28,7 +28,8 @@ import { logoutSuccess } from '../../redux-state/authSlice'
 import lock from '../../assets/images/lock.jpg'
 import PasswordModal from '../items/Password/PasswordModal'
 import FolderModal from '../items/Folders/FolderModal'
-import NoteModal from '../items/Notes/NotesModal'
+import NotesModal from '../items/Notes/NotesModal'
+import AddressModal from '../items/Addresses/AddressModal'
 import { CSpinner } from '@coreui/react'
 
 function Dashboard() {
@@ -38,6 +39,7 @@ function Dashboard() {
   const [showpasswordForm, setShowPasswordForm] = useState(false)
   const [showfolderform, setShowfolderform] = useState(false)
   const [shownoteform, setShowNoteform] = useState(false)
+  const [shownaddressform, setShowAddressform] = useState(false)
   const [foldersList, setFoldersList] = useState([])
   const [passwordslist, setPasswordsList] = useState([])
 
@@ -48,6 +50,12 @@ function Dashboard() {
     } else if (current == 'password') {
       setVisibleMain((prevStatus) => !prevStatus)
       setShowPasswordForm((prevStatus) => !prevStatus)
+    } else if (current == 'notes') {
+      setVisibleMain((prevStatus) => !prevStatus)
+      setShowNotesForm((prevStatus) => !prevStatus)
+    } else if (current == 'address') {
+      setVisibleMain((prevStatus) => !prevStatus)
+      setShowAddressForm((prevStatus) => !prevStatus)
     } else {
       setVisibleMain((prevStatus) => !prevStatus)
     }
@@ -96,6 +104,8 @@ function Dashboard() {
           await setShowNoteform(true)
         } else if (type === 'folders') {
           await setShowfolderform(true)
+        } else if (type === 'address') {
+          await setShowAddressform(true)
         }
       }
     } catch (error) {
@@ -192,6 +202,16 @@ function Dashboard() {
                 <CIcon icon={cilNotes} size="lg" className="ml-2 text" /> Notes
               </div>
             </CButton>
+            <CButton
+              color="primary"
+              onClick={() => {
+                fetchFolders('password')
+              }}
+            >
+              <div className="d-flex flex-column justify-content-center align-items-center">
+                <CIcon icon={cilLockLocked} size="lg" className="ml-2 text" /> Address
+              </div>
+            </CButton>
           </CModalBody>
         </CModal>
       ) : setShowfolderform ? (
@@ -205,8 +225,16 @@ function Dashboard() {
         </Suspense>
       ) : setShowNoteform ? (
         // Fallback or another condition
-        <NoteModal
+        <NotesModal
           passwordvisible={shownoteform}
+          folders={foldersList}
+          passwordlist={setPasswordsList}
+          handleClick={handleClick}
+        />
+      ) : setShowAddressform ? (
+        // Fallback or another condition
+        <AddressModal
+          passwordvisible={showaddressform}
           folders={foldersList}
           passwordlist={setPasswordsList}
           handleClick={handleClick}
