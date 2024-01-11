@@ -29,46 +29,64 @@ class RecentController extends Controller
                 Log::error('User not authenticated with the provided token.');
                 return response()->json(['error' => 'user not defined'], 401);
             }
-            $passwordData = Password::where('url', $request->url)->first();
     
-            if ($passwordData) {
-                $recentData = [
-                    'user_id' => $user->id,
-                    'name' => $passwordData->name,
-                    'folder_id' => (string) $passwordData->folder_id,
-                    'url' => $passwordData->url,
-                    'username' => $passwordData->username,
-                    'password' => $passwordData->password,
-                    'notes' => $passwordData->notes,
-                ];
+            // Check if the URL already exists in the recent table
+            $existingRecentData = Recent::where('url', $request->url)
+                ->where('user_id', $user->id)
+                ->first();
     
-                Recent::create($recentData);
-    
+            if ($existingRecentData) {
+                // If the URL exists, update the existing record
+                $existingRecentData->update(['updated_at' => now()]);
                 return response()->json([
                     'status' => 'success',
-                    'message' => 'URL found in the database. Added to Recent.',
-                    'url' => $recentData,
+                    'message' => 'URL found in the database. Updated in Recent.',
+                    'url' => $existingRecentData,
                 ]);
             } else {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'URL not found in the database.',
-                ]);
+                // If the URL does not exist, create a new record
+                $passwordData = Password::where('url', $request->url)->first();
+    
+                if ($passwordData) {
+                    $recentData = [
+                        'user_id' => $user->id,
+                        'name' => $passwordData->name,
+                        'folder_id' => (string) $passwordData->folder_id,
+                        'url' => $passwordData->url,
+                        'username' => $passwordData->username,
+                        'password' => $passwordData->password,
+                        'notes' => $passwordData->notes,
+                    ];
+    
+                    Recent::create($recentData);
+    
+                    return response()->json([
+                        'status' => 'success',
+                        'message' => 'URL found in the database. Added to Recent.',
+                        'url' => $recentData,
+                    ]);
+                } else {
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => 'URL not found in the database.',
+                    ]);
+                }
             }
     
         } catch (\Exception $e) {
-            Log::error('Error creating password: ' . $e->getMessage());
+            Log::error('Error creating/updating recent data: ' . $e->getMessage());
             // If an exception occurs, return an error response
             return response()->json(['error' => $e->getMessage()], 401);
         }
     }
+    
 
     public function index()
     {
         try {
             // Attempt to authenticate the user based on the JWT token in the request header
             $user = JWTAuth::parseToken()->authenticate();
-            $recentdata = Recent::where('user_id',$user->id)->get();
+            $recentdata = Recent::where('user_id',$user->id)->latest('lastused', 'desc')->get();
 
             if ($recentdata->isNotEmpty()) {
                 return response()->json(['recentdata' => $recentdata]);
