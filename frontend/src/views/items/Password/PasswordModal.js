@@ -161,6 +161,12 @@ function PasswordModal(props) {
                     invalid={touched.folder && errors.folder ? true : false}
                     value={values.folder}
                   >
+                    <option value="">Choose...</option>
+                    {foldersList.map((folder) => (
+                      <option key={folder.id} value={folder.id}>
+                        {folder.folder_name}
+                      </option>
+                    ))}
                   </CFormSelect>
                   <CFormFeedback invalid>{errors.folder}</CFormFeedback>
                 </CCol>

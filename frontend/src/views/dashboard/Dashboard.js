@@ -39,7 +39,7 @@ function Dashboard() {
   const [showpasswordForm, setShowPasswordForm] = useState(false)
   const [showfolderform, setShowfolderform] = useState(false)
   const [shownoteform, setShowNoteform] = useState(false)
-  const [shownaddressform, setShowAddressform] = useState(false)
+  const [showaddressform, setShowAddressform] = useState(false)
   const [foldersList, setFoldersList] = useState([])
   const [passwordslist, setPasswordsList] = useState([])
 
@@ -50,12 +50,9 @@ function Dashboard() {
     } else if (current == 'password') {
       setVisibleMain((prevStatus) => !prevStatus)
       setShowPasswordForm((prevStatus) => !prevStatus)
-    } else if (current == 'notes') {
-      setVisibleMain((prevStatus) => !prevStatus)
-      setShowNotesForm((prevStatus) => !prevStatus)
     } else if (current == 'address') {
       setVisibleMain((prevStatus) => !prevStatus)
-      setShowAddressForm((prevStatus) => !prevStatus)
+      setShowAddressform((prevStatus) => !prevStatus)
     } else {
       setVisibleMain((prevStatus) => !prevStatus)
     }
