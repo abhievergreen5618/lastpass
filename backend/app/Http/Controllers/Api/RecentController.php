@@ -86,7 +86,7 @@ class RecentController extends Controller
         try {
             // Attempt to authenticate the user based on the JWT token in the request header
             $user = JWTAuth::parseToken()->authenticate();
-            $recentdata = Recent::where('user_id',$user->id)->latest('lastused', 'desc')->get();
+            $recentdata = Recent::where('user_id',$user->id)->latest('updated_at', 'desc')->get();
 
             if ($recentdata->isNotEmpty()) {
                 return response()->json(['recentdata' => $recentdata]);
