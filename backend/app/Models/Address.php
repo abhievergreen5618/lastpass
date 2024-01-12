@@ -35,5 +35,8 @@ class Address extends Model
         'mobilephone',
         'fax',
         'notes',
+        'phoneno',
+        'street',
+        'apt',
     ];
 }

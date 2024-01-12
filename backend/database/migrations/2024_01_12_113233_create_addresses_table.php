@@ -38,7 +38,10 @@ return new class extends Migration
             $table->string('eveningphone')->nullable();
             $table->string('mobilephone')->nullable();
             $table->string('fax')->nullable();
-            $table->string('notes')->nullable();
+            $table->string('notes')->nullable();          
+            $table->string('phoneno')->nullable();
+            $table->string('street')->nullable();
+            $table->string('apt')->nullable();
             $table->timestamps();
         });
     }
