@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use App\Models\Country;
 
-class ContryController extends Controller
+class CountryController extends Controller
 {
     //
     public function index() {
