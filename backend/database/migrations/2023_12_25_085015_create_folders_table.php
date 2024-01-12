@@ -16,8 +16,7 @@ return new class extends Migration
             $table->string("folder_name");
             $table->string("parent")->nullable();
             $table->string("sub_parent")->nullable();
-            // $table->foreignId('user_id')->constrained('users'); // Reference the 'id' column in the 'users' table
-            $table->timestamps();
+             $table->timestamps();
         });
     }
 
