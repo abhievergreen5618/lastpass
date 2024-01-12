@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Database\Seeders\FolderSeeder;
 use Database\Seeders\UserSeeder;
+use Database\Seeders\CountrySeeder;
+use Database\Seeders\PhoneCodeSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,6 +27,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             FolderSeeder::class,
+            CountrySeeder::class,
+            PhoneCodeSeeder::class,
             // Add more seeders if needed
         ]);
     }
