@@ -10,7 +10,7 @@ class PhoneCode extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        
         'countrycode',
         'name',
         'phonecode',
