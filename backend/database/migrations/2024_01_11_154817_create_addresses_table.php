@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('county')->nullable();
             $table->string('state')->nullable();
             $table->string('postalcode')->nullable();
-            $table->string('country')->nullable();
+            $table->foreignId('country')->constrained('countries')->onDelete('cascade');
             $table->string('timezone')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
