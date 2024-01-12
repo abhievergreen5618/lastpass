@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('county')->nullable();
             $table->string('state')->nullable();
             $table->string('postalcode')->nullable();
-            $table->string('country')->nullable(); // Reference the 'name' column in the 'country' table
+            $table->string('country')->nullable();
             $table->string('timezone')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();

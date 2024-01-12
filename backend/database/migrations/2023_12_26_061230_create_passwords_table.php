@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('passwords', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users'); // Reference the 'id' column in the 'users' table
+            // $table->foreignId('folder_id')->constrained('folders'); // Reference the 'id' column in the 'users' table
             $table->string("folder_id");
             $table->string("name");
             $table->string("url");
