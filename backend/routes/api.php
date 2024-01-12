@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\FoldersController;
 use App\Http\Controllers\Api\PasswordController;
 use App\Http\Controllers\Api\RecentController;
 use App\Http\Controllers\Api\AddressController;
+use App\Http\Controllers\Api\CountryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,5 +45,8 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/getrecentdata', [RecentController::class, 'index']);
     
     Route::post('/saveaddress', [AddressController::class, 'store']);
+
+    
+    Route::post('/getcountrylist', [CountryController::class, 'index']);
 });
  
