@@ -37,6 +37,7 @@ class AddressController extends Controller
                 'address3' => $request['address3'],
                 'city' => $request['city'],
                 'county' => $request['county'],
+                'state' => $request['state'],
                 'postalcode' => $request['postalcode'],
                 'country' => $request['country'],
                 'timezone' => $request['timezone'],
