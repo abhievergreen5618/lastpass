@@ -34,7 +34,7 @@ return new class extends Migration
             $table->foreignId('country')->constrained('countries')->onDelete('cascade');
             $table->string('timezone')->nullable();
             $table->string('email')->nullable();
-            $table->string('phone')->nullable();
+            $table->foreignId('phone')->constrained('phone_codes')->onDelete('cascade')->nullable();
             $table->string('eveningphone')->nullable();
             $table->string('mobilephone')->nullable();
             $table->string('fax')->nullable();
