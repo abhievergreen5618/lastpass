@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FoldersController;
 use App\Http\Controllers\Api\PasswordController;
 use App\Http\Controllers\Api\RecentController;
+use App\Http\Controllers\Api\AddressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,5 +42,7 @@ Route::middleware(['auth:api'])->group(function () {
     
     Route::post('/recentuseddata', [RecentController::class, 'recentuseddata']);
     Route::post('/getrecentdata', [RecentController::class, 'index']);
+    
+    Route::post('/saveaddress', [AddressController::class, 'store']);
 });
  
