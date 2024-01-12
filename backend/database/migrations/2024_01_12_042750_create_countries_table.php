@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users'); // Reference the 'id' column in the 'users' table
             $table->string("name");
             $table->timestamps();
         });

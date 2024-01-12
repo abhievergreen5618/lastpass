@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users'); // Reference the 'id' column in the 'users' table
             $table->string('name');
             $table->string('folder')->nullable();
             $table->string('title')->nullable();
@@ -30,7 +31,7 @@ return new class extends Migration
             $table->string('county')->nullable();
             $table->string('state')->nullable();
             $table->string('postalcode')->nullable();
-            $table->string('country')->nullable();
+            $table->foreignId('country')->constrained('countries')->nullable(); // Reference the 'name' column in the 'country' table
             $table->string('timezone')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
