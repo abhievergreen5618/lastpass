@@ -4,6 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
+use App\Models\User;
+use App\Models\Country;
 
 class ContryController extends Controller
 {
