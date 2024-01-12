@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\PasswordController;
 use App\Http\Controllers\Api\RecentController;
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\CountryController;
+use App\Http\Controllers\Api\PhoneCodeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,5 +49,7 @@ Route::middleware(['auth:api'])->group(function () {
 
     
     Route::post('/getcountrylist', [CountryController::class, 'index']);
+    
+    Route::post('/getphonecodelist', [PhoneCodeController::class, 'index']);
 });
  
