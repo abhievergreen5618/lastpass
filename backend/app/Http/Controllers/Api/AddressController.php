@@ -58,4 +58,14 @@ class AddressController extends Controller
         }
     }
 
+    public function index() {
+        $address = Address::get();
+    
+        if (!empty($address)) {
+            return response()->json(['address' => $address]);
+        } else {
+            // If no folders are found, return a message
+            return response()->json(['address' => ['No address founded']]);
+        }
+    }
 }

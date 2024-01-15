@@ -35,19 +35,19 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/savepassword', [PasswordController::class, 'store']);
     Route::post('/editpassword/{id}', [PasswordController::class, 'edit']);
     Route::post('/getpasswordlist', [PasswordController::class, 'index']);
-    Route::post('/getfolderslist', [FoldersController::class, 'list']);
-    Route::post('/createfolder', [FoldersController::class, 'store']);
-    // Route::post('/recentpasswordlist', [PasswordController::class, 'recentpasswordlist']);
     Route::post('/deletepassword/{id}', [PasswordController::class, 'destroy']);
     Route::post('/alertdata', [PasswordController::class, 'alertdata']);
+    // Route::post('/recentpasswordlist', [PasswordController::class, 'recentpasswordlist']);
 
-    
+    Route::post('/getfolderslist', [FoldersController::class, 'list']);
+    Route::post('/createfolder', [FoldersController::class, 'store']);
+
     Route::post('/recentuseddata', [RecentController::class, 'recentuseddata']);
     Route::post('/getrecentdata', [RecentController::class, 'index']);
     
     Route::post('/saveaddress', [AddressController::class, 'store']);
+    Route::post('/getaddresslist', [AddressController::class, 'index']);
 
-    
     Route::post('/getcountrylist', [CountryController::class, 'index']);
     
     Route::post('/getphonecodelist', [PhoneCodeController::class, 'index']);
