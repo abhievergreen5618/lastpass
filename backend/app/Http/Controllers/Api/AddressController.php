@@ -22,7 +22,7 @@ class AddressController extends Controller
             // Create a new password record
             Address::create([
                 'user_id' => $user->id,
-                'name' => $request['name'],
+                'name' => $request['name'] ?? 'Contact info',
                 'folder' => $request['folder'] ?? 'Uncategorized',
                 'title' => $request['title'],
                 'firstname' => $request['firstanme'],
