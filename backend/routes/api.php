@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\RecentController;
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\PhoneCodeController;
+use App\Http\Controllers\Api\MonthController;
+use App\Http\Controllers\Api\YearController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,8 +50,17 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/saveaddress', [AddressController::class, 'store']);
     Route::post('/getaddresslist', [AddressController::class, 'index']);
 
+
+    //------------------SEEDERS START-------------------------
+
     Route::post('/getcountrylist', [CountryController::class, 'index']);
     
     Route::post('/getphonecodelist', [PhoneCodeController::class, 'index']);
+    
+    Route::post('/getmonth', [MonthController::class, 'index']);
+
+    Route::post('/getyear', [YearController::class, 'index']);
+
+    //-------------------SEEDERS END----------------------------
 });
  
