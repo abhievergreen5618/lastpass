@@ -17,7 +17,7 @@ class MonthController extends Controller
     public function index() {
         $month = Month::get();
     
-        if (!empty($countries)) {
+        if (!empty($month)) {
             return response()->json(['month' => $month]);
         } else {
             // If no folders are found, return a message
