@@ -52,6 +52,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/getaddresslist', [AddressController::class, 'index']);
 
     Route::post('/savepayment', [PaymentCardController::class, 'store']);
+    Route::post('/getpaymentcardlist', [PaymentCardController::class, 'index']);
 
     //------------------SEEDERS START-------------------------
 

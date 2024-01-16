@@ -44,4 +44,16 @@ class PaymentCardController extends Controller
             return response()->json(['error' => $e->getMessage()], 401);
         }
     }
+
+    public function index() {
+        $paymentcard = PaymentCard::get();
+    
+        if (!empty($paymentcard)) {
+            return response()->json(['paymentcard' => $paymentcard]);
+        } else {
+            // If no folders are found, return a message
+            return response()->json(['paymentcard' => ['No paymentcard founded']]);
+        }
+    }
+
 }
