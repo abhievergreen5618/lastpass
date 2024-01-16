@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('folder')->nullable();
             $table->string('cardholder')->nullable();
-            $table->foreignId('month')->constrained('month')->onDelete('cascade'); 
-            $table->foreignId('year')->constrained('year')->onDelete('cascade'); 
+            $table->foreignId('month')->constrained('months')->onDelete('cascade'); 
+            $table->foreignId('year')->constrained('years')->onDelete('cascade'); 
             $table->string('number')->nullable();
             $table->string('cvvno')->nullable();
             $table->string('startdate')->nullable();
