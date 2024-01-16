@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\PhoneCodeController;
 use App\Http\Controllers\Api\MonthController;
 use App\Http\Controllers\Api\YearController;
+use App\Http\Controllers\Api\PaymentCardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/saveaddress', [AddressController::class, 'store']);
     Route::post('/getaddresslist', [AddressController::class, 'index']);
 
+    Route::post('/savepayment', [PaymentController::class, 'store']);
 
     //------------------SEEDERS START-------------------------
 
