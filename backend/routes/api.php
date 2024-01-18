@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\PhoneCodeController;
 use App\Http\Controllers\Api\MonthController;
 use App\Http\Controllers\Api\YearController;
 use App\Http\Controllers\Api\PaymentCardController;
+use App\Http\Controllers\Api\TimeZoneController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +64,8 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/getmonth', [MonthController::class, 'index']);
 
     Route::post('/getyear', [YearController::class, 'index']);
+
+    Route::post('/gettimezone', [TimeZoneController::class, 'index']);
 
     //-------------------SEEDERS END----------------------------
 });
