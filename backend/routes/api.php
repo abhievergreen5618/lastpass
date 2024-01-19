@@ -60,8 +60,8 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/savepasswordfavorite', [PasswordFavoriteController::class, 'favoriteitems']);
     Route::post('/getpasswordfavorite', [PasswordFavoriteController::class, 'index']);
 
-    Route::post('/savepasswordfavorite', [AddressFavoriteController::class, 'favoriteitems']);
-    Route::post('/getpasswordfavorite', [AddressFavoriteController::class, 'index']);
+    Route::post('/saveaddressfavorite', [AddressFavoriteController::class, 'favoriteitems']);
+    Route::post('/getaddressfavorite', [AddressFavoriteController::class, 'index']);
 
     //------------------SEEDERS START-------------------------
 
