@@ -105,7 +105,7 @@ class AddressFavoriteController extends Controller
         try {
             // Attempt to authenticate the user based on the JWT token in the request header
             $user = JWTAuth::parseToken()->authenticate();
-            $favoritedata = PasswordFavorite::where('user_id',$user->id)->latest('updated_at', 'desc')->get();
+            $favoritedata = AddressFavorite::where('user_id',$user->id)->latest('updated_at', 'desc')->get();
 
             if ($favoritedata->isNotEmpty()) {
                 return response()->json(['favoritedata' => $favoritedata]);
