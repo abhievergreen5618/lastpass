@@ -61,7 +61,7 @@ class PasswordFavoriteController extends Controller
                     return response()->json([
                         'status' => 'success',
                         'message' => 'ID found in the database. Added to Favorite.',
-                        'id' => $recentData,
+                        'id' => $favoriteData,
                     ]);
                 } else {
                     return response()->json([
