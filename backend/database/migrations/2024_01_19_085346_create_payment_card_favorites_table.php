@@ -13,6 +13,18 @@ return new class extends Migration
     {
         Schema::create('payment_card_favorites', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Reference the 'id' column in the 'users' table
+            $table->string('name')->nullable();
+            $table->string('folder')->nullable();
+            $table->string('cardholder')->nullable();
+            $table->string('expmonth')->nullable(); 
+            $table->string('expyear')->nullable(); 
+            $table->string('number')->nullable();
+            $table->string('cvvno')->nullable();
+            $table->string('startdate')->nullable();
+            $table->string('type')->nullable();
+            $table->string('startyear')->nullable();
+            $table->string('notes')->nullable();
             $table->timestamps();
         });
     }
