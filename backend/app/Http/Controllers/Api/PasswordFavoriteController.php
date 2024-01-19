@@ -29,17 +29,17 @@ class PasswordFavoriteController extends Controller
             }
     
             // Check if the id already exists in the recent table
-            $existingRecentData = Password::where('id', $request->id)
+            $existingFavoriteData = PasswordFavorite::where('id', $request->id)
                 ->where('user_id', $user->id)
                 ->first();
     
-            if ($existingRecentData) {
+            if ($existingFavoriteData) {
                 // If the URL exists, update the existing record
-                $existingRecentData->update(['updated_at' => now()]);
+                $existingFavoriteData->update(['updated_at' => now()]);
                 return response()->json([
                     'status' => 'success',
                     'message' => 'ID found in the database. Updated in Favorite.',
-                    'id' => $existingRecentData,
+                    'id' => $existingFavoriteData,
                 ]);
             } else {
                 // If the ID does not exist, create a new record
@@ -77,4 +77,5 @@ class PasswordFavoriteController extends Controller
             return response()->json(['error' => $e->getMessage()], 401);
         }
     }
+
 }
