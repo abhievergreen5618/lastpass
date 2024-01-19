@@ -57,6 +57,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/getpaymentcardlist', [PaymentCardController::class, 'index']);
     
     Route::post('/savepasswordfavorite', [PasswordFavoriteController::class, 'favoriteitems']);
+    Route::post('/getpasswordfavorite', [PasswordFavoriteController::class, 'index']);
 
     //------------------SEEDERS START-------------------------
 

@@ -78,4 +78,25 @@ class PasswordFavoriteController extends Controller
         }
     }
 
+    public function index()
+    {
+        try {
+            // Attempt to authenticate the user based on the JWT token in the request header
+            $user = JWTAuth::parseToken()->authenticate();
+            $favoritedata = PasswordFavorite::where('user_id',$user->id)->latest('updated_at', 'desc')->get();
+
+            if ($favoritedata->isNotEmpty()) {
+                return response()->json(['favoritedata' => $favoritedata]);
+            } else {
+                // If no folders are found, return a message
+                return response()->json(['favoritedata' => []]);
+            }
+        } catch (\Exception $e) {
+            Log::error('Error getting favoritedata: ' . $e->getMessage());
+            // If an exception occurs, return an error response
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+    }
+    
+
 }
