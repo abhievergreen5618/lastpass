@@ -51,21 +51,27 @@ Route::middleware(['auth:api'])->group(function () {
 
     Route::post('/recentuseddata', [RecentController::class, 'recentuseddata']);
     Route::post('/getrecentdata', [RecentController::class, 'index']);
+    Route::post('/deleterecent/{id}', [RecentController::class, 'destroy']);
     
     Route::post('/saveaddress', [AddressController::class, 'store']);
     Route::post('/getaddresslist', [AddressController::class, 'index']);
+    Route::post('/deleteaddress/{id}', [AddressController::class, 'destroy']);
 
     Route::post('/savepayment', [PaymentCardController::class, 'store']);
     Route::post('/getpaymentcardlist', [PaymentCardController::class, 'index']);
+    Route::post('/deletepaymentcard/{id}', [PaymentCardController::class, 'destroy']);
     
     Route::post('/savepasswordfavorite', [PasswordFavoriteController::class, 'favoriteitems']);
     Route::post('/getpasswordfavorite', [PasswordFavoriteController::class, 'index']);
+    Route::post('/deletepasswordfavorite/{id}', [PasswordFavoriteController::class, 'destroy']);
 
     Route::post('/saveaddressfavorite', [AddressFavoriteController::class, 'favoriteitems']);
     Route::post('/getaddressfavorite', [AddressFavoriteController::class, 'index']);
+    Route::post('/deleteaddressfavorite/{id}', [AddressFavoriteController::class, 'destroy']);
     
     Route::post('/savepaymentcardfavorite', [PaymentCardFavoriteController::class, 'favoriteitems']);
     Route::post('/getpaymentcardfavorite', [PaymentCardFavoriteController::class, 'index']);
+    Route::post('/deletepaymentfavorite/{id}', [PaymentCardFavoriteController::class, 'destroy']);
 
     //------------------SEEDERS START-------------------------
 

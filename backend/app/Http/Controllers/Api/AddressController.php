@@ -25,7 +25,7 @@ class AddressController extends Controller
                 'name' => $request['name'] ?? 'Contact info',
                 'folder' => $request['folder'] ?? 'Uncategorized',
                 'title' => $request['title'],
-                'firstname' => $request['firstanme'],
+                'firstname' => $request['firstname'],
                 'middlename' => $request['middlename'],
                 'lastname' => $request['lastname'],
                 'username' => $request['username'],
@@ -58,7 +58,8 @@ class AddressController extends Controller
         }
     }
 
-    public function index() {
+    public function index() 
+    {
         $address = Address::get();
     
         if (!empty($address)) {
@@ -68,4 +69,23 @@ class AddressController extends Controller
             return response()->json(['address' => ['No address founded']]);
         }
     }
+
+    
+    public function destroy(string $id)
+    {
+        try {
+       
+            $user = JWTAuth::parseToken()->authenticate();
+            $password = Address::where('id', $id)->first();
+            $password->delete();
+
+            return response()->json(['message' => 'Address deleted successfully'], 200);
+        } catch (\Exception $e) {
+            Log::error('Error deleting address: ' . $e->getMessage());
+            // If an exception occurs, return an error response1
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+    }
+
+
 }

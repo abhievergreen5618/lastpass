@@ -28,7 +28,7 @@ class PaymentCardFavoriteController extends Controller
                 return response()->json(['error' => 'user not defined'], 401);
             }
     
-            // Check if the id already exists in the recent table
+            // Check if the id already exists in the PaymentCardFavorite table
             $existingFavoriteData = PaymentCardFavorite::where('id', $request->id)
                 ->where('user_id', $user->id)
                 ->first();

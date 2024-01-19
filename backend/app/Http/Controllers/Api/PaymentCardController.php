@@ -56,4 +56,21 @@ class PaymentCardController extends Controller
         }
     }
 
+    
+    public function destroy(string $id)
+    {
+        try {
+       
+            $user = JWTAuth::parseToken()->authenticate();
+            $password = PaymentCard::where('id', $id)->first();
+            $password->delete();
+
+            return response()->json(['message' => 'Password deleted successfully'], 200);
+        } catch (\Exception $e) {
+            Log::error('Error deleting password: ' . $e->getMessage());
+            // If an exception occurs, return an error response1
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+    }
+
 }
