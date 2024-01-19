@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use App\Models\Address;
+use App\Models\PaymentCard;
 use App\Models\User;
 use App\Models\PaymentCardFavorite;
 use Illuminate\Support\Facades\Log;
