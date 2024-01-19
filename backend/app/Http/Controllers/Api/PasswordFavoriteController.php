@@ -4,18 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Illuminate\Support\Facades\Validator;
-use Tymon\JWTAuth\Facades\JWTAuth;
-use App\Models\Password;
-use App\Models\User;
-use App\Models\PasswordFavorite;
-use Illuminate\Support\Facades\Log;
 
-class PasswordFavorite extends Controller
+class PasswordFavoriteController extends Controller
 {
     //
-    public function favoriteitems(Request $request)
+   public function favoriteitems(Request $request)
     {
         try {
             $request->validate([
