@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\YearController;
 use App\Http\Controllers\Api\PaymentCardController;
 use App\Http\Controllers\Api\TimeZoneController;
 use App\Http\Controllers\Api\PasswordFavoriteController;
+use App\Http\Controllers\Api\AddressFavoriteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,9 @@ Route::middleware(['auth:api'])->group(function () {
     
     Route::post('/savepasswordfavorite', [PasswordFavoriteController::class, 'favoriteitems']);
     Route::post('/getpasswordfavorite', [PasswordFavoriteController::class, 'index']);
+
+    Route::post('/savepasswordfavorite', [AddressFavoriteController::class, 'favoriteitems']);
+    Route::post('/getpasswordfavorite', [AddressFavoriteController::class, 'index']);
 
     //------------------SEEDERS START-------------------------
 
