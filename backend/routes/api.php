@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\MonthController;
 use App\Http\Controllers\Api\YearController;
 use App\Http\Controllers\Api\PaymentCardController;
 use App\Http\Controllers\Api\TimeZoneController;
+use App\Http\Controllers\Api\PasswordFavoriteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,8 @@ Route::middleware(['auth:api'])->group(function () {
 
     Route::post('/savepayment', [PaymentCardController::class, 'store']);
     Route::post('/getpaymentcardlist', [PaymentCardController::class, 'index']);
+    
+    Route::post('/savepasswordfavorite', [PasswordFavoriteController::class, 'favoriteitems']);
 
     //------------------SEEDERS START-------------------------
 
