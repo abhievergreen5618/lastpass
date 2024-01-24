@@ -181,7 +181,7 @@ class PasswordController extends Controller
         catch (\Exception $e) {
             Log::error('Error updating password: ' . $e->getMessage());
             // If an exception occurs, return an error response
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' =>  $e->getMessage()], 401);
         }
     }
 
