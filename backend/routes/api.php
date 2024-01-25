@@ -57,10 +57,12 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/saveaddress', [AddressController::class, 'store']);
     Route::post('/getaddresslist', [AddressController::class, 'index']);
     Route::post('/deleteaddress/{id}', [AddressController::class, 'destroy']);
+    Route::post('/editpassword/{id}', [AddressController::class, 'edit']);
 
     Route::post('/savepayment', [PaymentCardController::class, 'store']);
     Route::post('/getpaymentcardlist', [PaymentCardController::class, 'index']);
     Route::post('/deletepaymentcard/{id}', [PaymentCardController::class, 'destroy']);
+    Route::post('/editpassword/{id}', [PaymentCardController::class, 'edit']);
     
     Route::post('/savepasswordfavorite', [PasswordFavoriteController::class, 'favoriteitems']);
     Route::post('/getpasswordfavorite', [PasswordFavoriteController::class, 'index']);
