@@ -70,7 +70,57 @@ class AddressController extends Controller
         }
     }
 
+    public function edit(Request $request, string $id)
+    {
+        try 
+        {
+            $user = JWTAuth::parseToken()->authenticate();
+
+            $address = Address::where('id',$id)->first();
+
+            if (!$address) {
+                return response()->json(['message' => 'Address not found'], 404);
+            }
     
+            $address::update([
+                'user_id' => $user->id,
+                'name' => $request['name'] ?? 'Contact info',
+                'folder' => $request['folder'] ?? 'Uncategorized',
+                'title' => $request['title'],
+                'firstname' => $request['firstname'],
+                'middlename' => $request['middlename'],
+                'lastname' => $request['lastname'],
+                'username' => $request['username'],
+                'gender' => $request['gender'],
+                'birthday' => $request['birthday'],
+                'company' => $request['company'],
+                'address1' => $request['address1'],
+                'address2' => $request['address2'],
+                'address3' => $request['address3'],
+                'city' => $request['city'],
+                'county' => $request['county'],
+                'state' => $request['state'],
+                'postalcode' => $request['postalcode'],
+                'country' => $request['country'],
+                'timezone' => $request['timezone'],
+                'email' => $request['email'],
+                'phone' => $request['phone'],
+                'eveningphone' => $request['eveningphone'],
+                'mobilephone' => $request['mobilephone'],
+                'fax' => $request['fax'],
+                'notes' => $request['notes'] || null,
+            ]);
+    
+            return response()->json(['message' => 'Address updated successfully'], 200);
+        }
+        catch (\Exception $e) {
+            Log::error('Error updating address: ' . $e->getMessage());
+            // If an exception occurs, return an error response
+            return response()->json(['error' =>  $e->getMessage()], 401);
+        }
+    }
+
+
     public function destroy(string $id)
     {
         try {

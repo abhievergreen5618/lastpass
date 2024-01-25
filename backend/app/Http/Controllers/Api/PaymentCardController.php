@@ -56,6 +56,42 @@ class PaymentCardController extends Controller
         }
     }
 
+    public function edit(Request $request, string $id)
+    {
+        try 
+        {
+            $user = JWTAuth::parseToken()->authenticate();
+
+            $paymentcard = PaymenyCard::where('id',$id)->first();
+
+            if (!$paymentcard) {
+                return response()->json(['message' => 'paymentcard not found'], 404);
+            }
+    
+            $paymentcard->update([
+                'user_id' => $user->id,
+                'name' => $request['name'] ?? 'Personal info',
+                'folder' => $request['folder'] ?? 'Uncategorized',
+                'cardholder' => $request['cardholder'],
+                'expmonth' => $request['expmonth'], 
+                'expyear' => $request['expyear'],
+                'number' => $request['number'],
+                'cvvno' => $request['cvvno'],
+                'startdate' => $request['startdate'],
+                'type' => $request['type'],
+                'startyear' => $request['startyear'],
+                'notes' => $request['notes'] || null,
+            ]);
+    
+            return response()->json(['message' => 'paymentcard updated successfully'], 200);
+        }
+        catch (\Exception $e) {
+            Log::error('Error updating paymentcard: ' . $e->getMessage());
+            // If an exception occurs, return an error response
+            return response()->json(['error' =>  $e->getMessage()], 401);
+        }
+    }
+
     
     public function destroy(string $id)
     {
