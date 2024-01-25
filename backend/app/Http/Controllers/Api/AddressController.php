@@ -82,7 +82,7 @@ class AddressController extends Controller
                 return response()->json(['message' => 'Address not found'], 404);
             }
     
-            $address::update([
+            $address->update([
                 'user_id' => $user->id,
                 'name' => $request['name'] ?? 'Contact info',
                 'folder' => $request['folder'] ?? 'Uncategorized',
