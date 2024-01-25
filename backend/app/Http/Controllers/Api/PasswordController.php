@@ -108,7 +108,6 @@ class PasswordController extends Controller
                 $request->all(),
                 [
                     'name' => 'required', // Assuming folder_id is required
-                    
                     'url' => 'required',
                     'username' => 'required',
                     'password' => 'required',
