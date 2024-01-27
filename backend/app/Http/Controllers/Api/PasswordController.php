@@ -168,7 +168,7 @@ class PasswordController extends Controller
     
             $password->update([
                 'name' => $request['name'],
-                'folder_id' => $request['folder'],
+                'folder_id' => $request['folder'] ?? 'Uncategorized',
                 'url' => $request['url'],
                 'username' => $request['username'],
                 'password' => $request['password'],
