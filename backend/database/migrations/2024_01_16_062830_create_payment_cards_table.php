@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('expyear')->nullable(); 
             $table->string('number')->nullable();
             $table->string('cvvno')->nullable();
-            $table->foreignId('startdate')->constrained('months')->onDelete('cascade')->nullable();
+            $table->string('startdate')->nullable();
             $table->string('type')->nullable();
             $table->string('startyear')->nullable();
             $table->string('notes')->nullable();
