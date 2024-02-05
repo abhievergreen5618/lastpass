@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::insert([
-            ['name'=>'Abhishek kumar','email' => 'abhishek@evergreenbrain.com','password'=>Hash::make('12345678')]
+            ['name'=>'Shivangi','email' => 'shivangi@evergreenbrain.com','password'=>Hash::make('12345678')]
         ]);
     }
 }
