@@ -47,6 +47,9 @@ class AddressController extends Controller
                 'mobilephone' => $request['mobilephone'],
                 'fax' => $request['fax'],
                 'notes' => $request['notes'] || null,
+                'phoneno' => $request['phoneno'],
+                'street' => $request['street'],
+                'apt' => $request['apt'],
             ]);
 
             // Optionally, you can return a success response
