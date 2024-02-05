@@ -62,7 +62,7 @@ class PaymentCardController extends Controller
         {
             $user = JWTAuth::parseToken()->authenticate();
 
-            $paymentcard = PaymenyCard::where('id',$id)->first();
+            $paymentcard = PaymentCard::where('id',$id)->first();
 
             if (!$paymentcard) {
                 return response()->json(['message' => 'paymentcard not found'], 404);
