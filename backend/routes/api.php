@@ -60,6 +60,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/editaddress/{id}', [AddressController::class, 'edit']);
 
     Route::post('/savepayment', [PaymentCardController::class, 'store']);
+    Route::post('/savepaymentcard', [PaymentCardController::class, 'savepayment']);
     Route::post('/getpaymentcardlist', [PaymentCardController::class, 'index']);
     Route::post('/deletepaymentcard/{id}', [PaymentCardController::class, 'destroy']);
     Route::post('/editpaymentcard/{id}', [PaymentCardController::class, 'edit']);

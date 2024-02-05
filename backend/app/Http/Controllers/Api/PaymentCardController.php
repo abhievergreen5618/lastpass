@@ -45,6 +45,33 @@ class PaymentCardController extends Controller
         }
     }
 
+    public function savepayment(Request $request)
+    {
+        try {
+            // Attempt to authenticate the user based on the JWT token in the request header
+            $user = JWTAuth::parseToken()->authenticate();
+
+            // Create a new password record
+            PaymentCard::create([
+                'user_id' => $user->id,
+                'name' => $request['name'] ?? 'Personal info',
+                'folder' => $request['folder'] ?? 'Uncategorized',
+                'cardholder' => $request['cardholder'] || null,
+                'expmonth' => $request['expmonth'] || null, 
+                'expyear' => $request['expyear'] || null,
+                'number' => $request['number'] || null,
+                'cvvno' => $request['cvvno'] || null,
+            ]);
+
+            // Optionally, you can return a success response
+            return response()->json(['message' => 'Payment Card added successfully'], 200);
+        } catch (\Exception $e) {
+            Log::error('Error creating password: ' . $e->getMessage());
+            // If an exception occurs, return an error response
+            return response()->json(['error' => $e->getMessage()], 401);
+        }
+    }
+
     public function index() {
         $paymentcard = PaymentCard::get();
     
